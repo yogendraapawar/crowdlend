@@ -1,17 +1,21 @@
 import React from "react";
 import { Box } from "@mui/material";
-import Modal from "@mui/material/Modal";
-import LoanRequestDetailsCard from "../components/LoanRequestDetailsCard";
-import Typography from "@mui/material/Typography";
+import FilterTab from "../components/FilterTab";
 import LoansList from "../components/LoansList";
-import LoanDetailsModal from "../components/LoanDetailsModal";
-import { useState } from "react";
 
 export default function Dashboard() {
-
   return (
-    <Box sx={{ width: "100%" }}>
-      <LoansList /> 
+    <Box
+      sx={{
+        width: "100%",
+        p: 2,
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+      }}
+    >
+      <FilterTab />
+      <LoansList />
     </Box>
   );
 }

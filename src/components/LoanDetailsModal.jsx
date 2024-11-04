@@ -8,7 +8,7 @@ import LoanRequestDetailsCard from "./LoanRequestDetailsCard";
 import { useSelector } from "react-redux";
 import BidForm from "./BidForm";
 import CloseIcon from "@mui/icons-material/Close";
-import {  IconButton,} from "@mui/material";
+import { IconButton } from "@mui/material";
 
 const modalStyle = {
   position: "absolute",
@@ -29,15 +29,14 @@ export default function LoanDetailsModal({
   selectedLoanId,
   handleModalClose,
 }) {
-  
   const [isLoading, setIsLoading] = useState(true);
-  const [loanDetails, setLoanDetails] = useState( {
+  const [loanDetails, setLoanDetails] = useState({
     borrower_name: "Yogendra Pawar",
     loan_amount: 25000,
     duration_in_months: 20,
     application_status: "bidding",
     created_at: "23/12/2025",
-    expected_interest_rate:7,
+    expected_interest_rate: 7,
     bids: [
       {
         bidder_name: "ABC",
@@ -82,7 +81,7 @@ export default function LoanDetailsModal({
         offered_duration: 12,
       },
     ],
-  },);
+  });
   const isBidFormOpened = useSelector((state) => state.flags.isBidFormOpened);
 
   const handleClose = (event, reason) => {
@@ -97,7 +96,7 @@ export default function LoanDetailsModal({
 
       // Check if the response contains the expected data
       if (response) {
-        // setLoanDetails(response.loanDetails);
+        setLoanDetails(response.loanDetails);
       }
     } catch (error) {
       console.error("Error fetching loan modal details:", error);
@@ -111,7 +110,7 @@ export default function LoanDetailsModal({
     if (selectedLoanId) {
       fetchData();
     }
-  }, [selectedLoanId]);
+  }, [fetchData]);
 
   const headerStyle = {
     position: "sticky",
@@ -148,7 +147,7 @@ export default function LoanDetailsModal({
               display: "flex",
               justifyContent: "space-between",
               alignItems: "left",
-              paddingX:2
+              paddingX: 2,
             }}
           >
             <Typography variant="h6">Loan Details</Typography>

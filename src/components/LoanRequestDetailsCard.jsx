@@ -1,21 +1,17 @@
 import React from "react";
-import {
-  Box,
-  Paper,
-  Typography,
-  Button,
-  IconButton,
-} from "@mui/material";
+import { Box, Paper, Typography, Button } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import EnhancedTable from "./TableComponent";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CloseIcon from "@mui/icons-material/Close";
 import { setIsBidFormOpened } from "../features/flags/flagsSlice";
 import { useDispatch } from "react-redux";
 
-export default function LoanRequestDetailsCard({handleModalClose, loanDetails}) {
-  const dispatch=useDispatch()
-console.log("loanDetails keys", Object.keys(loanDetails));
+export default function LoanRequestDetailsCard({
+  handleModalClose,
+  loanDetails,
+}) {
+  const dispatch = useDispatch();
+  console.log("loanDetails keys", Object.keys(loanDetails));
   const bidHeadCells = [
     {
       id: "bidder_name",
@@ -48,6 +44,24 @@ console.log("loanDetails keys", Object.keys(loanDetails));
       label: "Bid Status",
     },
   ];
+
+  const personalDetails = {
+    borrower_name: "Yogendra Pawar",
+    loan_amount: 25000,
+    duration_in_months: 20,
+    expected_interest_rate: 7.4,
+    created_at: "25/10/2024",
+    date_of_birth: "10/01/2003",
+    contact_number: "7499504618",
+  };
+
+  const formatKey = (key) => {
+    return key
+      .replace(/_/g, " ")
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
 
   return (
     <Box
@@ -83,50 +97,20 @@ console.log("loanDetails keys", Object.keys(loanDetails));
         >
           <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
-              <Grid sx={{ width: "100%" }} size={{ sm: 12, md: 6, lg: 6 }}>
-                <Box sx={{ display: "flex", width: "100%" }}>
-                  <Typography sx={{ width: "100%" }}>Name:</Typography>
-                  <Typography sx={{ width: "100%" }}>
-                    {loanDetails.borrower_name}
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid sx={{ width: "100%" }} size={{ sm: 12, md: 6, lg: 6 }}>
-                <Box sx={{ display: "flex", width: "100%" }}>
-                  <Typography sx={{ width: "100%" }}>Loan amount:</Typography>
-                  <Typography sx={{ width: "100%" }}>
-                    {loanDetails.loan_amount}
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid sx={{ width: "100%" }} size={{ sm: 12, md: 6, lg: 6 }}>
-                <Box sx={{ display: "flex", width: "100%" }}>
-                  <Typography sx={{ width: "100%" }}>
-                    Duration in months:
-                  </Typography>
-                  <Typography sx={{ width: "100%" }}>
-                    {loanDetails.duration_in_months} Months
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid sx={{ width: "100%" }} size={{ sm: 12, md: 6, lg: 6 }}>
-                <Box sx={{ display: "flex", width: "100%" }}>
-                  <Typography sx={{ width: "100%" }}>
-                    Expected interest rate:
-                  </Typography>
-                  <Typography sx={{ width: "100%" }}>
-                    {loanDetails.expected_interest_rate} %
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid sx={{ width: "100%" }} size={{ sm: 12, md: 6, lg: 6 }}>
-                <Box sx={{ display: "flex", width: "100%" }}>
-                  <Typography sx={{ width: "100%" }}>Created at:</Typography>
-                  <Typography sx={{ width: "100%" }}>
-                    {loanDetails.created_at}
-                  </Typography>
-                </Box>
-              </Grid>
+              {Object.entries(personalDetails).map(([key, value], index) => (
+                <Grid sx={{ width: "100%" }} size={{ sm: 12, md: 6, lg: 6 }}>
+                  <Box sx={{ display: "flex", width: "100%" }}>
+                    <Typography
+                      fontSize={"14px"}
+                      fontWeight={600}
+                      sx={{ width: "100%" }}
+                    >
+                      {formatKey(key)}
+                    </Typography>
+                    <Typography sx={{ width: "100%" }}>{value}</Typography>
+                  </Box>
+                </Grid>
+              ))}
             </Grid>
           </Box>
         </Box>

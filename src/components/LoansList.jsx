@@ -1,13 +1,10 @@
 import { Box } from "@mui/material";
-import Modal from "@mui/material/Modal";
-import LoanRequestDetailsCard from "../components/LoanRequestDetailsCard";
 import Typography from "@mui/material/Typography";
-import React from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import { CardActionArea } from "@mui/material";
-import { useState } from "react";
 import LoanDetailsModal from "../components/LoanDetailsModal";
-
+import TablePagination from "@mui/material/TablePagination";
 
 export default function LoansList() {
   const loanData = [
@@ -76,34 +73,37 @@ export default function LoansList() {
       created_at: "25/07/2024",
     },
   ];
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedLoanId, setSelectedLoanId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [itemsPerPage, setItemPerPage] = useState(3);
+
   const handleClick = (loanId) => {
-    // Your click handler logic here
-    console.log("dfghjkl",loanId)
-    setSelectedLoanId(loanId)
-    handleModalOpen()
+    setSelectedLoanId(loanId);
+    handleModalOpen();
   };
-   const [modalOpen, setModalOpen] = useState(false);
-   const [selectedLoanId, setSelectedLoanId] = useState(null);
 
   const handleModalOpen = () => {
     setModalOpen(true);
   };
 
-
+  console.log("RERENDERED LOANLIST");
 
   const handleModalClose = () => setModalOpen(false);
+
+  // Calculate the current loans to display based on the current page
+  const startIndex = currentPage * itemsPerPage;
+  const currentLoans = loanData.slice(startIndex, startIndex + itemsPerPage);
+
+  const handleChangePage = (event, newPage) => {
+    setCurrentPage(newPage);
+  };
+
   return (
     <>
-      <Box
-        display="flex"
-        flexDirection="column" // Change to "column" for a vertical layout
-        p={2}
-        sx={{
-          width: "100%",
-          gap: 2,
-        }}
-      >
-        {loanData.map((loan) => (
+      <Box display="flex" flexDirection="column" sx={{ width: "100%", gap: 2 }}>
+        {currentLoans.map((loan) => (
           <Card key={loan.loan_id} sx={{ display: "flex", width: "100%" }}>
             <CardActionArea onClick={() => handleClick(loan.loan_id)}>
               <Box
@@ -127,18 +127,9 @@ export default function LoansList() {
                   <Typography sx={{ textAlign: "left", fontWeight: 800 }}>
                     {loan.borrower_name}
                   </Typography>
-
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "flex-end",
-                    }}
-                  >
+                  <Box sx={{ display: "flex", alignItems: "flex-end" }}>
                     <Typography
-                      sx={{
-                        fontSize: "1.25rem",
-                        fontWeight: "bold",
-                      }}
+                      sx={{ fontSize: "1.25rem", fontWeight: "bold" }}
                     >
                       {loan.loan_amount}{" "}
                     </Typography>
@@ -156,18 +147,21 @@ export default function LoansList() {
                     {loan.loan_duration} Months term duration
                   </Typography>
                 </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    paddingX: "1rem",
-                  }}
-                ></Box>
               </Box>
             </CardActionArea>
           </Card>
         ))}
       </Box>
+      <TablePagination
+        component="div"
+        count={loanData.length}
+        page={currentPage}
+        onPageChange={handleChangePage}
+        rowsPerPage={itemsPerPage}
+        onRowsPerPageChange={(event) => {
+          setItemPerPage(parseInt(event.target.value, 10)); // or use a state setter that you have defined for itemsPerPage
+        }}
+      />
       <LoanDetailsModal
         modalOpen={modalOpen}
         selectedLoanId={selectedLoanId}

@@ -6,27 +6,18 @@ import {
   Typography,
   ButtonGroup,
   Paper,
-  IconButton,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2"; // Importing Grid from MUI
 import { useDispatch } from "react-redux";
 import { setIsBidFormOpened } from "../features/flags/flagsSlice";
-import CloseIcon from "@mui/icons-material/Close";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-const paperTheme = createTheme({
-  palette: {
-    mode: "light", // Set to light mode
-    background: {
-      paper: "#f5f5f5", // Light gray color for Paper
-    },
-  },
-});
+import { createTheme } from "@mui/material/styles";
 
 export default function BidForm({ loanDetails }) {
-  const [months, setMonths] = useState("");
-  const [interestRate, setInterestRate] = useState("");
-  const [amount, setAmount] = useState("");
+  const [months, setMonths] = useState(loanDetails.duration_in_months || ""); // Hardcoded value
+  const [interestRate, setInterestRate] = useState(
+    loanDetails.expected_interest_rate || ""
+  ); // Hardcoded value
+  const [amount, setAmount] = useState(loanDetails.loan_amount || ""); // Hardcoded value
   const [monthlyPayment, setMonthlyPayment] = useState(0);
   const [totalPayment, setTotalPayment] = useState(0);
   const [loanMonthlyPayment, setLoanMonthlyPayment] = useState(0);
@@ -97,26 +88,6 @@ export default function BidForm({ loanDetails }) {
         gap: 1,
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          flex: 1,
-          justifyContent: "space-between",
-          alignItems: "left",
-          gap: 2,
-          marginBottom: 2,
-        }}
-      >
-        <Typography variant="h6">Loan Details</Typography>
-        <IconButton
-          onClick={() => {
-            console.log("Dispatching close action");
-            dispatch(setIsBidFormOpened(false));
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      </Box>
       <Grid container spacing={2}>
         <Grid sx={{ width: "100%" }} size={{ sm: 12, md: 6, lg: 6 }}>
           <Box sx={{ mb: 2, width: "100%" }}>
