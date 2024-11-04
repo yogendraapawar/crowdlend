@@ -110,25 +110,6 @@ function DemoPageContent({ pathname }) {
   );
 }
 
-function Search() {
-  return (
-    <React.Fragment>
-      <Button
-        component="label"
-        role={undefined}
-        variant="contained"
-        tabIndex={-1}
-        sx={{
-          fontSize: "0.65rem", // Smaller font size
-        }}
-        size="small"
-        startIcon={<AddCircleOutlineIcon />}
-      >
-        Request loan
-      </Button>
-    </React.Fragment>
-  );
-}
 
 
 DemoPageContent.propTypes = {
@@ -155,9 +136,7 @@ function DashboardLayoutBasic(props) {
       theme={demoTheme}
       window={demoWindow}
     >
-      <DashboardLayout
-        slots={{ toolbarActions: Search }}
-      >
+      <DashboardLayout      >
         <DemoPageContent pathname={router.pathname} />
       </DashboardLayout>
     </AppProvider>
