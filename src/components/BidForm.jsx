@@ -10,7 +10,6 @@ import {
 import Grid from "@mui/material/Grid2"; // Importing Grid from MUI
 import { useDispatch } from "react-redux";
 import { setIsBidFormOpened } from "../features/flags/flagsSlice";
-import { createTheme } from "@mui/material/styles";
 
 export default function BidForm({ loanDetails }) {
   const [months, setMonths] = useState(loanDetails.duration_in_months || ""); // Hardcoded value

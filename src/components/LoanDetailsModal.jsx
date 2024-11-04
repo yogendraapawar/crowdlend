@@ -110,7 +110,7 @@ export default function LoanDetailsModal({
     if (selectedLoanId) {
       fetchData();
     }
-  }, [fetchData]);
+  }, [selectedLoanId]);
 
   const headerStyle = {
     position: "sticky",
