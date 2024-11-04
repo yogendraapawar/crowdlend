@@ -5,6 +5,7 @@ import Card from "@mui/material/Card";
 import { CardActionArea } from "@mui/material";
 import LoanDetailsModal from "../components/LoanDetailsModal";
 import TablePagination from "@mui/material/TablePagination";
+import FilterTab from "./FilterTab";
 
 export default function LoansList() {
   const loanData = [
@@ -103,6 +104,7 @@ export default function LoansList() {
   return (
     <>
       <Box display="flex" flexDirection="column" sx={{ width: "100%", gap: 2 }}>
+        <FilterTab />
         {currentLoans.map((loan) => (
           <Card key={loan.loan_id} sx={{ display: "flex", width: "100%" }}>
             <CardActionArea onClick={() => handleClick(loan.loan_id)}>

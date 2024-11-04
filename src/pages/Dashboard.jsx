@@ -8,13 +8,12 @@ export default function Dashboard() {
     <Box
       sx={{
         width: "100%",
-        p: 2,
+        px: 2,
         display: "flex",
         flexDirection: "column",
         gap: 2,
       }}
     >
-      <FilterTab />
       <LoansList />
     </Box>
   );
