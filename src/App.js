@@ -11,6 +11,7 @@ function App() {
           <Route path="/dashboard" element={<DashboardLayoutBasic />} />
 
           <Route path="/login" element={<SignIn/>} />
+          <Route path="/agent" element={<SignIn/>} />
         </Routes>
       </div>
     </Router>
