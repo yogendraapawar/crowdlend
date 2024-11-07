@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 import BidForm from "./BidForm";
 import CloseIcon from "@mui/icons-material/Close";
 import { IconButton } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { setIsBidFormOpened } from "../features/flags/flagsSlice";
 
 const modalStyle = {
   position: "absolute",
@@ -30,6 +32,8 @@ export default function LoanDetailsModal({
   handleModalClose,
 }) {
   const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+
   const [loanDetails, setLoanDetails] = useState({
     borrower_name: "Yogendra Pawar",
     loan_amount: 25000,
@@ -125,7 +129,8 @@ export default function LoanDetailsModal({
   const contentStyle = {
     overflowY: "auto",
     flex: 1,
-    p: 4, // Move padding to content area
+    px: 2, // Move padding to content area
+    py: 3,
   };
   return (
     <Modal
@@ -150,8 +155,23 @@ export default function LoanDetailsModal({
               paddingX: 2,
             }}
           >
-            <Typography variant="h6">Loan Details</Typography>
-            <IconButton onClick={handleModalClose}>
+            <Box
+              sx={{
+                textAlign: "left",
+                width: "100%",
+                fontSize: "1.5rem",
+                fontWeight: "bold",
+                color: "text.secondary",
+              }}
+            >
+              {isBidFormOpened ? "Bid Form" : "Loan Details"}
+            </Box>
+            <IconButton
+              onClick={() => {
+                handleModalClose();
+                dispatch(setIsBidFormOpened(false));
+              }}
+            >
               <CloseIcon />
             </IconButton>
           </Box>

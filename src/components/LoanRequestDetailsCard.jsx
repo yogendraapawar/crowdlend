@@ -1,10 +1,12 @@
 import React from "react";
-import { Box, Paper, Typography, Button } from "@mui/material";
+import { Box, Paper, Typography, Button, IconButton } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import EnhancedTable from "./TableComponent";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { setIsBidFormOpened } from "../features/flags/flagsSlice";
 import { useDispatch } from "react-redux";
+import Divider from "@mui/material/Divider";
+import DownloadIcon from "@mui/icons-material/Download";
 
 export default function LoanRequestDetailsCard({
   handleModalClose,
@@ -95,19 +97,50 @@ export default function LoanRequestDetailsCard({
             gap: 1,
           }}
         >
-          <Box sx={{ flexGrow: 1 }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: "flex",
+              flexDirection: "column",
+              gap: 2,
+            }}
+          >
+            <Typography
+              variant="h6"
+              sx={{
+                width: "100%",
+                textAlign: "left",
+                fontWeight: "bold",
+                color: "primary.main",
+              }}
+            >
+              Basic Details
+            </Typography>
+            <Divider />
             <Grid container spacing={2}>
               {Object.entries(personalDetails).map(([key, value], index) => (
                 <Grid sx={{ width: "100%" }} size={{ sm: 12, md: 6, lg: 6 }}>
                   <Box sx={{ display: "flex", width: "100%" }}>
                     <Typography
                       fontSize={"14px"}
-                      fontWeight={600}
-                      sx={{ width: "100%" }}
+                      fontWeight={"semibold"}
+                      sx={{
+                        width: "100%",
+                        color: "text.secondary",
+                        fontWeight: "bold",
+                      }}
                     >
                       {formatKey(key)}
                     </Typography>
-                    <Typography sx={{ width: "100%" }}>{value}</Typography>
+                    <Typography
+                      sx={{
+                        width: "100%",
+                        color: "text.primary",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {value}
+                    </Typography>
                   </Box>
                 </Grid>
               ))}
@@ -135,21 +168,10 @@ export default function LoanRequestDetailsCard({
               width: "100%",
             }}
           >
-            <CheckCircleIcon />
-            <Typography>{"EKYC"}</Typography>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center" /* Centers items vertically */,
-              alignItems: "center",
-
-              width: "100%",
-            }}
-          >
-            <Typography>{"800"}</Typography>
-            <Typography>{"Credit Score"}</Typography>
+            <CheckCircleIcon sx={{ height: "2rem", color: "success.main" }} />
+            <Typography sx={{ color: "text.secondary", fontWeight: "bold" }}>
+              {"EKYC"}
+            </Typography>
           </Box>
           <Box
             sx={{
@@ -160,12 +182,57 @@ export default function LoanRequestDetailsCard({
               width: "100%",
             }}
           >
-            <CheckCircleIcon />
-            <Typography>{"Financial Data"}</Typography>
+            <Typography
+              sx={{ height: "2rem", fontSize: "1.2rem", fontWeight: "bold" }}
+            >
+              {"800"}
+            </Typography>
+            <Typography sx={{ color: "text.secondary", fontWeight: "bold" }}>
+              {"Credit Score"}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center" /* Centers items vertically */,
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <IconButton color="primary" sx={{ height: "2rem" }}>
+              <DownloadIcon />
+            </IconButton>
+            <Typography sx={{ color: "text.secondary", fontWeight: "bold" }}>
+              {"Financial Data"}
+            </Typography>
           </Box>
         </Box>
       </Paper>
-      <EnhancedTable rows={loanDetails?.bids} headCells={bidHeadCells} />
+      <Paper sx={{ padding: 2 }} elevation={5}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            flexGrow: 1,
+            gap: 2,
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{
+              width: "100%",
+              textAlign: "left",
+              fontWeight: "bold",
+              color: "primary.main",
+            }}
+          >
+            Bids offered
+          </Typography>
+          <Divider />
+          <EnhancedTable rows={loanDetails?.bids} headCells={bidHeadCells} />
+        </Box>
+      </Paper>
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
         <Button
           variant="contained"

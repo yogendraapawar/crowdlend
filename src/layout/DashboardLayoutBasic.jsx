@@ -7,7 +7,7 @@ import { AppProvider } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { useDemoRouter } from "@toolpad/core/internal";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import Dashboard from "../pages/Dashboard";
+import Dashboard from "../pages/dashboard/Dashboard";
 import LoanRequestForm from "../components/LoanRequestForm";
 
 const NAVIGATION = [

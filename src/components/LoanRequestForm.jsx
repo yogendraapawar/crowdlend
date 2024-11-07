@@ -8,7 +8,6 @@ import {
   IconButton,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2"; // Importing Grid from MUI
-// import { setIsLoanRequestFormOpened } from "../features/flags/flagsSlice"; // Adjust as needed
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function LoanRequestForm() {
@@ -32,29 +31,31 @@ export default function LoanRequestForm() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        gap: 1,
+        width: "100%",
+        gap: 2,
+        padding: { xs: 2, sm: 3 }, // Add some padding for smaller screens
       }}
     >
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "flex-start",
           alignItems: "center",
           marginBottom: 2,
+          width: "100%",
         }}
       >
-        <Typography variant="h6">Create Loan Request</Typography>
-        <IconButton
-          onClick={() => {
-            console.log("Dispatching close action");
-            // dispatch(setIsLoanRequestFormOpened(false));
-          }}
+        <Typography
+          variant="h6"
+          sx={{ fontSize: { xs: "1rem", sm: "1.25rem" } }}
         >
-          <CloseIcon />
-        </IconButton>
+          Create Loan Request
+        </Typography>
       </Box>
-      <Grid container spacing={2}>
-        <Grid sx={{ width: "100%" }} size={{ sm: 12, md: 6, lg: 6 }}>
+      <Grid fullWidth container spacing={2}>
+        <Grid width={"100%"} item xs={12}>
+          {" "}
+          {/* Ensure it takes full width */}
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -62,7 +63,7 @@ export default function LoanRequestForm() {
               display: "flex",
               flexDirection: "column",
               gap: 2,
-              width: "100%",
+              width: "100%", // Ensure form takes full width
             }}
           >
             <TextField
@@ -72,6 +73,8 @@ export default function LoanRequestForm() {
               onChange={(e) => setLoanAmount(e.target.value)}
               type="number"
               required
+              fullWidth // Make text field full width
+              sx={{ marginBottom: 2 }} // Add margin to separate the inputs
             />
 
             <TextField
@@ -81,6 +84,8 @@ export default function LoanRequestForm() {
               onChange={(e) => setInterestRate(e.target.value)}
               type="number"
               required
+              fullWidth // Make text field full width
+              sx={{ marginBottom: 2 }}
             />
 
             <TextField
@@ -90,30 +95,33 @@ export default function LoanRequestForm() {
               onChange={(e) => setDurationMonths(e.target.value)}
               type="number"
               required
+              fullWidth // Make text field full width
+              sx={{ marginBottom: 2 }}
             />
 
             <Box
               sx={{
                 display: "flex",
-                width: "100%",
                 justifyContent: "flex-end",
+                gap: 2, // Add gap between buttons
+                flexDirection: { xs: "column", sm: "row" }, // Stack buttons on mobile, align on row for larger screens
               }}
             >
-              <ButtonGroup sx={{ mt: 2 }} size="small">
-                <Button
-                  variant="text"
-                  sx={{ marginRight: 1 }}
-                  onClick={() => {
-                    console.log("Dispatching close action");
-                    // dispatch(setIsLoanRequestFormOpened(false));
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button variant="contained" type="submit">
-                  Submit
-                </Button>
-              </ButtonGroup>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  console.log("Dispatching close action");
+                  // dispatch(setIsLoanRequestFormOpened(false));
+                }}
+                sx={{
+                  marginBottom: { xs: 2, sm: 0 },
+                }}
+              >
+                Cancel
+              </Button>
+              <Button variant="contained" type="submit" sx={{}}>
+                Submit
+              </Button>
             </Box>
           </Box>
         </Grid>

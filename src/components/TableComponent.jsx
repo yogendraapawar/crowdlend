@@ -51,7 +51,7 @@ function EnhancedTable({ rows, headCells }) {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }} elevation={5}>
+      <Paper sx={{ width: "100%", mb: 2 }}>
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <TableHead>
@@ -67,6 +67,7 @@ function EnhancedTable({ rows, headCells }) {
                       active={orderBy === headCell.id}
                       direction={orderBy === headCell.id ? order : "asc"}
                       onClick={(event) => handleRequestSort(event, headCell.id)}
+                      sx={{ fontWeight: "bold" }}
                     >
                       {headCell.label}
                     </TableSortLabel>

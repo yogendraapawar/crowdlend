@@ -1,13 +1,23 @@
 import React, { useState } from "react";
-import { Box, Typography, Button, TextField, IconButton } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  TextField,
+  IconButton,
+  MenuItem,
+} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { Collapse } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
+import Card from "@mui/material/Card";
+
 const FilterTab = () => {
   const [interestRateInputs, setInterestRateInputs] = useState(["0", "10"]);
   const [amountInputs, setAmountInputs] = useState(["0", "50000"]);
   const [durationInputs, setDurationInputs] = useState(["0", "36"]);
+  const [loanStatus, setLoanStatus] = useState(""); // For loan status dropdown
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const toggleFilter = () => {
@@ -18,6 +28,7 @@ const FilterTab = () => {
     setInterestRateInputs(["0", "10"]);
     setAmountInputs(["0", "50000"]);
     setDurationInputs(["0", "36"]);
+    setLoanStatus(""); // Reset loan status
   };
 
   const handleInputChange = (index, value, type) => {
@@ -44,6 +55,7 @@ const FilterTab = () => {
       interestRate: interestRateInputs,
       amount: amountInputs,
       duration: durationInputs,
+      loanStatus: loanStatus, // Log selected loan status
     });
   };
 
@@ -53,19 +65,28 @@ const FilterTab = () => {
         sx={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
         }}
       >
+        <Box
+          sx={{
+            textAlign: "left",
+            width: "100%",
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+            color: "text.secondary",
+          }}
+        >
+          Loan List
+        </Box>
         <IconButton onClick={toggleFilter}>
           {!isFilterOpen ? <FilterAltIcon /> : <FilterAltOffIcon />}
         </IconButton>
       </Box>
       <Collapse in={isFilterOpen}>
-        <Box
+        <Card
           sx={{
             width: "100%",
-            border: 1,
-            borderColor: "primary.main", // Set border color to primary
             p: 3,
             borderRadius: 2,
             marginTop: 2,
@@ -215,7 +236,36 @@ const FilterTab = () => {
                 />
               </Box>
             </Grid>
+
+            {/* Loan Status Dropdown - TextField select */}
+            <Grid item xs={12}>
+              <Box sx={{ width: "100%" }}>
+                <Typography fontSize={14} textAlign={"left"} gutterBottom>
+                  Loan Status
+                </Typography>
+
+                <TextField
+                  select
+                  size="small"
+                  value={loanStatus}
+                  onChange={(e) => setLoanStatus(e.target.value)}
+                  sx={{
+                    width: "100%",
+                    "& .MuiInputBase-root": {
+                      height: "30px",
+                    },
+                  }}
+                >
+                  {["a", "b", "c"].map((name) => (
+                    <MenuItem key={name} value={name}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Box>
+            </Grid>
           </Grid>
+
           <Grid sx={{ justifyContent: "end", display: "flex", columnGap: 2 }}>
             <Button
               size="small"
@@ -236,7 +286,7 @@ const FilterTab = () => {
               Apply Filters
             </Button>
           </Grid>
-        </Box>
+        </Card>
       </Collapse>
     </Box>
   );

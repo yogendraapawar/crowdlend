@@ -51,6 +51,7 @@ export default function BidForm({ loanDetails }) {
 
   // Calculate payment based on user input
   useEffect(() => {
+    console.log("loan details from bid form", loanDetails);
     if (months && interestRate && amount) {
       const principal = parseFloat(amount);
       const interest = parseFloat(interestRate) / 100 / 12;
