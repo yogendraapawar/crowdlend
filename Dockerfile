@@ -16,3 +16,5 @@ COPY . .
 
 # Step 7: Command to run the application (start React app)
 CMD ["npm", "start"]
+
+# docker run -d -p <host_port>:<container_port> --restart unless-stopped --name <name_for_container> -v /{PWD}:<work_dir> <image_name>

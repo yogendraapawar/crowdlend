@@ -7,6 +7,7 @@ import {
   ButtonGroup,
   Paper,
 } from "@mui/material";
+import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid2"; // Importing Grid from MUI
 import { useDispatch } from "react-redux";
 import { setIsBidFormOpened } from "../features/flags/flagsSlice";
@@ -89,7 +90,10 @@ export default function BidForm({ loanDetails }) {
       }}
     >
       <Grid container spacing={2}>
-        <Grid sx={{ width: "100%" }} size={{ sm: 12, md: 6, lg: 6 }}>
+        <Grid
+          sx={{ width: "100%", px: "1rem" }}
+          size={{ sm: 12, md: 6, lg: 6 }}
+        >
           <Box sx={{ mb: 2, width: "100%" }}>
             {/* Loan details with key-value pairs */}
             <Box
@@ -137,67 +141,7 @@ export default function BidForm({ loanDetails }) {
                 {loanDetails.expected_interest_rate}%
               </Typography>
             </Box>
-            <Paper sx={{ padding: 1 }} elevation={2}>
-              <Typography
-                variant="body2"
-                sx={{
-                  fontWeight: "bold",
-                  flex: 1,
-                  textAlign: "left",
-                  marginBottom: 1,
-                }}
-              >
-                Requested:
-              </Typography>
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                sx={{ mb: 1, width: "100%", paddingLeft: 2 }}
-              >
-                <Typography
-                  variant="body2"
-                  sx={{ fontWeight: "bold", flex: 1, textAlign: "left" }}
-                >
-                  Loan Monthly Payment:
-                </Typography>
-                <Typography variant="body2" sx={{ flex: 1, textAlign: "left" }}>
-                  {loanMonthlyPayment ? `₹${loanMonthlyPayment}` : "N/A"}
-                </Typography>
-              </Box>
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                sx={{ mb: 1, width: "100%", paddingLeft: 2 }}
-              >
-                <Typography
-                  variant="body2"
-                  sx={{ fontWeight: "bold", flex: 1, textAlign: "left" }}
-                >
-                  Loan Total Payment:
-                </Typography>
-                <Typography variant="body2" sx={{ flex: 1, textAlign: "left" }}>
-                  {loanTotalPayment ? `₹${loanTotalPayment}` : "N/A"}
-                </Typography>
-              </Box>
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                sx={{ mb: 1, width: "100%", paddingLeft: 2 }}
-              >
-                <Typography
-                  variant="body2"
-                  sx={{ fontWeight: "bold", flex: 1, textAlign: "left" }}
-                >
-                  Loan Interest Amount:
-                </Typography>
-                <Typography variant="body2" sx={{ flex: 1, textAlign: "left" }}>
-                  {loanInterestAmount ? `₹${loanInterestAmount}` : "N/A"}
-                </Typography>
-              </Box>
-            </Paper>
-
-            {/* Display calculated results for user input only if sufficient data is provided */}
-            {showCalculations && (
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               <Paper sx={{ padding: 1 }} elevation={2}>
                 <Typography
                   variant="body2"
@@ -208,7 +152,7 @@ export default function BidForm({ loanDetails }) {
                     marginBottom: 1,
                   }}
                 >
-                  Offered:
+                  Requested:
                 </Typography>
                 <Box
                   display="flex"
@@ -219,13 +163,13 @@ export default function BidForm({ loanDetails }) {
                     variant="body2"
                     sx={{ fontWeight: "bold", flex: 1, textAlign: "left" }}
                   >
-                    Monthly Payment:
+                    Loan Monthly Payment:
                   </Typography>
                   <Typography
                     variant="body2"
                     sx={{ flex: 1, textAlign: "left" }}
                   >
-                    {monthlyPayment ? `₹${monthlyPayment}` : "N/A"}
+                    {loanMonthlyPayment ? `₹${loanMonthlyPayment}` : "N/A"}
                   </Typography>
                 </Box>
                 <Box
@@ -237,13 +181,13 @@ export default function BidForm({ loanDetails }) {
                     variant="body2"
                     sx={{ fontWeight: "bold", flex: 1, textAlign: "left" }}
                   >
-                    Total Payment:
+                    Loan Total Payment:
                   </Typography>
                   <Typography
                     variant="body2"
                     sx={{ flex: 1, textAlign: "left" }}
                   >
-                    {totalPayment ? `₹${totalPayment}` : "N/A"}
+                    {loanTotalPayment ? `₹${loanTotalPayment}` : "N/A"}
                   </Typography>
                 </Box>
                 <Box
@@ -255,21 +199,94 @@ export default function BidForm({ loanDetails }) {
                     variant="body2"
                     sx={{ fontWeight: "bold", flex: 1, textAlign: "left" }}
                   >
-                    Interest Amount:
+                    Loan Interest Amount:
                   </Typography>
                   <Typography
                     variant="body2"
                     sx={{ flex: 1, textAlign: "left" }}
                   >
-                    {userInterestAmount ? `₹${userInterestAmount}` : "N/A"}
+                    {loanInterestAmount ? `₹${loanInterestAmount}` : "N/A"}
                   </Typography>
                 </Box>
               </Paper>
-            )}
+
+              {/* Display calculated results for user input only if sufficient data is provided */}
+              {showCalculations && (
+                <Paper sx={{ padding: 1 }} elevation={2}>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      fontWeight: "bold",
+                      flex: 1,
+                      textAlign: "left",
+                      marginBottom: 1,
+                    }}
+                  >
+                    Offered:
+                  </Typography>
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    sx={{ mb: 1, width: "100%", paddingLeft: 2 }}
+                  >
+                    <Typography
+                      variant="body2"
+                      sx={{ fontWeight: "bold", flex: 1, textAlign: "left" }}
+                    >
+                      Monthly Payment:
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ flex: 1, textAlign: "left" }}
+                    >
+                      {monthlyPayment ? `₹${monthlyPayment}` : "N/A"}
+                    </Typography>
+                  </Box>
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    sx={{ mb: 1, width: "100%", paddingLeft: 2 }}
+                  >
+                    <Typography
+                      variant="body2"
+                      sx={{ fontWeight: "bold", flex: 1, textAlign: "left" }}
+                    >
+                      Total Payment:
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ flex: 1, textAlign: "left" }}
+                    >
+                      {totalPayment ? `₹${totalPayment}` : "N/A"}
+                    </Typography>
+                  </Box>
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    sx={{ mb: 1, width: "100%", paddingLeft: 2 }}
+                  >
+                    <Typography
+                      variant="body2"
+                      sx={{ fontWeight: "bold", flex: 1, textAlign: "left" }}
+                    >
+                      Interest Amount:
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ flex: 1, textAlign: "left" }}
+                    >
+                      {userInterestAmount ? `₹${userInterestAmount}` : "N/A"}
+                    </Typography>
+                  </Box>
+                </Paper>
+              )}
+            </Box>
           </Box>
         </Grid>
-
-        <Grid sx={{ width: "100%" }} size={{ sm: 12, md: 6, lg: 6 }}>
+        <Grid
+          sx={{ width: "100%", px: "1rem" }}
+          size={{ sm: 12, md: 6, lg: 6 }}
+        >
           {/* Input form */}
           <Box
             component="form"

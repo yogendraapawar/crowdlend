@@ -17,7 +17,7 @@ const FilterTab = () => {
   const [interestRateInputs, setInterestRateInputs] = useState(["0", "10"]);
   const [amountInputs, setAmountInputs] = useState(["0", "50000"]);
   const [durationInputs, setDurationInputs] = useState(["0", "36"]);
-  const [loanStatus, setLoanStatus] = useState(""); // For loan status dropdown
+  const [loanStatus, setLoanStatus] = useState("Select"); // For loan status dropdown
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const toggleFilter = () => {

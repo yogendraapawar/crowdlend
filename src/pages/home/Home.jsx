@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import LoansList from "../../components/LoansList";
 
-export default function Dashboard() {
+export default function Home() {
   return (
     <Box
       sx={{

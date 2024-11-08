@@ -183,7 +183,7 @@ function LoanItemCard({ loan, handleClick }) {
     >
       <CardActionArea
         onClick={() => handleClick(loan.loan_id)}
-        sx={{ width: "100%", px: 2, py: 2 }}
+        sx={{ width: "100%", px: 2, py: 3 }}
       >
         <Box
           sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2 }}
@@ -291,6 +291,7 @@ function LoanItemCard({ loan, handleClick }) {
             justifyContent: "space-between",
             alignContent: "center",
             alignItems: "center",
+            marginTop: "1rem",
           }}
         >
           <Box>{loan.created_at}</Box>

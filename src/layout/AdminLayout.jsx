@@ -7,10 +7,11 @@ import { AppProvider } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { useDemoRouter } from "@toolpad/core/internal";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import Dashboard from "../pages/dashboard/Dashboard";
+import Home from "../pages/home/Home";
 import LoanRequestForm from "../components/LoanRequestForm";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
+import AdminDashboard from "../pages/admin-dashboard/AdminDashboard";
 
 const NAVIGATION = [
   {
@@ -18,8 +19,8 @@ const NAVIGATION = [
     title: "Main items",
   },
   {
-    segment: "home",
-    title: "Home",
+    segment: "/dashboard",
+    title: "Dashboard",
     icon: <DashboardIcon />,
   },
   // {
@@ -56,11 +57,6 @@ const NAVIGATION = [
   //   title: "Integrations",
   //   icon: <LayersIcon />,
   // },
-  {
-    segment: "createLoanRequest",
-    title: "Create loan request",
-    icon: <AddCircleOutlineIcon />,
-  },
 ];
 
 const demoTheme = createTheme({
@@ -83,11 +79,8 @@ function DemoPageContent({ pathname }) {
   let content;
 
   switch (pathname) {
-    case "/home":
-      content = <Dashboard />;
-      break;
-    case "/createLoanRequest":
-      content = <LoanRequestForm />;
+    case "/dashboard":
+      content = <AdminDashboard />;
       break;
     // Add more cases for other paths
     default:
@@ -114,7 +107,7 @@ DemoPageContent.propTypes = {
   pathname: PropTypes.string.isRequired,
 };
 
-function DashboardLayoutBasic(props) {
+function AdminLayout(props) {
   const { window } = props;
 
   const router = useDemoRouter("/dashboard");
@@ -141,12 +134,4 @@ function DashboardLayoutBasic(props) {
   );
 }
 
-DashboardLayoutBasic.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * Remove this when copying and pasting into your project.
-   */
-  window: PropTypes.func,
-};
-
-export default DashboardLayoutBasic;
+export default AdminLayout;
