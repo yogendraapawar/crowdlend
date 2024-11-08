@@ -77,7 +77,7 @@ const FilterTab = () => {
             color: "text.secondary",
           }}
         >
-          Loan List
+          Loan Requests
         </Box>
         <IconButton onClick={toggleFilter}>
           {!isFilterOpen ? <FilterAltIcon /> : <FilterAltOffIcon />}

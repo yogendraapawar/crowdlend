@@ -7,6 +7,7 @@ import { setIsBidFormOpened } from "../features/flags/flagsSlice";
 import { useDispatch } from "react-redux";
 import Divider from "@mui/material/Divider";
 import DownloadIcon from "@mui/icons-material/Download";
+import manImage from "../assets/man.jpg";
 
 export default function LoanRequestDetailsCard({
   handleModalClose,
@@ -82,10 +83,7 @@ export default function LoanRequestDetailsCard({
       >
         {/* selfie image container */}
         <Box>
-          <img
-            src="https://makepassportphoto.com/_next/image?url=%2F_next%2Fstatic%2Fchunks%2Fimages%2Fbefore-b870ac269118761f76a9cba73a279d1e.jpg&w=256&q=75"
-            alt="applicant"
-          />
+          <img src={manImage} alt="applicant" />
         </Box>
       </Box>
       <Paper sx={{ padding: 2 }} elevation={5}>

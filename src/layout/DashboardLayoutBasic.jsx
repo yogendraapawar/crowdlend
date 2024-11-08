@@ -9,6 +9,8 @@ import { useDemoRouter } from "@toolpad/core/internal";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import Dashboard from "../pages/dashboard/Dashboard";
 import LoanRequestForm from "../components/LoanRequestForm";
+import Fab from "@mui/material/Fab";
+import AddIcon from "@mui/icons-material/Add";
 
 const NAVIGATION = [
   {
@@ -16,8 +18,8 @@ const NAVIGATION = [
     title: "Main items",
   },
   {
-    segment: "dashboard",
-    title: "Dashboard",
+    segment: "home",
+    title: "Home",
     icon: <DashboardIcon />,
   },
   // {
@@ -81,7 +83,7 @@ function DemoPageContent({ pathname }) {
   let content;
 
   switch (pathname) {
-    case "/dashboard":
+    case "/home":
       content = <Dashboard />;
       break;
     case "/createLoanRequest":
@@ -125,7 +127,6 @@ function DashboardLayoutBasic(props) {
     <AppProvider
       navigation={NAVIGATION}
       branding={{
-        logo: <img src="https://mui.com/static/logo.png" alt="MUI logo" />,
         title: "CROWDLEND",
       }}
       router={router}
