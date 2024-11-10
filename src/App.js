@@ -1,15 +1,80 @@
 import "./App.css";
 import HomeLayout from "./layout/HomeLayout";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import SignIn from "./pages/login/Login"
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import SignIn from "./pages/login/Login";
+import AdminLayout from "./layout/AdminLayout";
+import { useEffect } from "react";
+
 function App() {
+  const ProtectedRoute = ({ children, allowedRole }) => {
+    const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+    const role = localStorage.getItem("role");
+
+    // If not authenticated, redirect to login
+    if (!isAuthenticated) {
+      return <Navigate to="/login" replace />;
+    }
+
+    // Role-based routing logic
+    if (allowedRole === "admin" && role !== "admin") {
+      return <Navigate to="/login" replace />;
+    }
+    if (allowedRole === "lender" && role !== "lender") {
+      return <Navigate to="/login" replace />;
+    }
+
+    return children;
+  };
+
+  const AuthRoute = () => {
+    const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+    const role = localStorage.getItem("role");
+
+    if (isAuthenticated) {
+      return (
+        <Navigate
+          to={role === "admin" ? "/admin/dashboard" : "/home"}
+          replace
+        />
+      );
+    }
+    return <SignIn />;
+  };
+
   return (
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/home" element={<HomeLayout />}/>
-          <Route path="/login" element={<SignIn/>} />
-          {/* <Route path="/admin/dashboard" element={<AdminLayout/>} /> */}
+          {/* Public routes */}
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute allowedRole="lender">
+                <HomeLayout />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Login Route */}
+          <Route path="/login" element={<AuthRoute />} />
+
+          {/* Protected admin route */}
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute allowedRole="admin">
+                <AdminLayout />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Redirect to /login for unmatched routes */}
+          <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </div>
     </Router>

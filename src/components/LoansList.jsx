@@ -13,6 +13,7 @@ import Chip from "@mui/material/Chip";
 export default function LoansList() {
   const loanData = [
     {
+      id: "1",
       loan_id: "a",
       borrower_name: "Yogendra Pawar",
       loan_amount: 25000,
@@ -23,6 +24,7 @@ export default function LoansList() {
       status: "bidding",
     },
     {
+      id: "2",
       loan_id: "b",
       borrower_name: "Anjali Sharma",
       loan_amount: 15000,
@@ -32,6 +34,7 @@ export default function LoansList() {
       status: "completed",
     },
     {
+      id: "3",
       loan_id: "c",
       borrower_name: "Rahul Mehta",
       loan_amount: 50000,
@@ -41,6 +44,7 @@ export default function LoansList() {
       status: "bidding",
     },
     {
+      id: "4",
       loan_id: "d",
       borrower_name: "Sneha Gupta",
       loan_amount: 30000,
@@ -50,6 +54,7 @@ export default function LoansList() {
       status: "closed",
     },
     {
+      id: "5",
       loan_id: "e",
       borrower_name: "Vikram Singh",
       loan_amount: 20000,
@@ -59,6 +64,7 @@ export default function LoansList() {
       status: "bidding",
     },
     {
+      id: "6",
       loan_id: "f",
       borrower_name: "Neha Desai",
       loan_amount: 40000,
@@ -68,6 +74,7 @@ export default function LoansList() {
       status: "completed",
     },
     {
+      id: "7",
       loan_id: "g",
       borrower_name: "Ajay Kumar",
       loan_amount: 35000,
@@ -77,6 +84,7 @@ export default function LoansList() {
       status: "bidding",
     },
     {
+      id: "8",
       loan_id: "h",
       borrower_name: "Pooja Rani",
       loan_amount: 18000,
@@ -105,7 +113,6 @@ export default function LoansList() {
 
   const handleModalClose = () => setModalOpen(false);
 
-  // Calculate the current loans to display based on the current page
   const startIndex = currentPage * itemsPerPage;
   const currentLoans = loanData.slice(startIndex, startIndex + itemsPerPage);
 
@@ -116,7 +123,6 @@ export default function LoansList() {
   return (
     <>
       <Box display="flex" flexDirection="column" sx={{ width: "100%", gap: 2 }}>
-        <FilterTab />
         <Grid container spacing={2}>
           {currentLoans.map((loan) => (
             <Grid sx={{ width: "100%" }} size={{ sm: 12, md: 6, lg: 4 }}>
@@ -132,7 +138,7 @@ export default function LoansList() {
         onPageChange={handleChangePage}
         rowsPerPage={itemsPerPage}
         onRowsPerPageChange={(event) => {
-          setItemPerPage(parseInt(event.target.value, 10)); // or use a state setter that you have defined for itemsPerPage
+          setItemPerPage(parseInt(event.target.value, 10));
         }}
       />
       <LoanDetailsModal
@@ -145,12 +151,10 @@ export default function LoansList() {
 }
 
 function generateRandomColor(name) {
-  // Simple hash function based on the string
   const hashCode = name
     .split("")
     .reduce((acc, char) => char.charCodeAt(0) + ((acc << 5) - acc), 0);
 
-  // Generate a color from the hash code (0xFFFFFF is the max RGB color value)
   const color = `#${((hashCode >> 24) & 0xff).toString(16).padStart(2, "0")}${((hashCode >> 16) & 0xff).toString(16).padStart(2, "0")}${((hashCode >> 8) & 0xff).toString(16).padStart(2, "0")}`;
 
   return color;
@@ -161,13 +165,13 @@ function LoanItemCard({ loan, handleClick }) {
   const getStatusColor = (status) => {
     switch (status) {
       case "bidding":
-        return { backgroundColor: "orange", color: "white" }; // Orange background for 'bidding'
+        return { backgroundColor: "orange", color: "white" };
       case "completed":
-        return { backgroundColor: "green", color: "white" }; // Green background for 'completed'
+        return { backgroundColor: "green", color: "white" };
       case "closed":
-        return { backgroundColor: "red", color: "white" }; // Red background for 'closed'
+        return { backgroundColor: "red", color: "white" };
       default:
-        return { backgroundColor: "grey", color: "white" }; // Default to grey if unknown
+        return { backgroundColor: "grey", color: "white" };
     }
   };
   return (
@@ -193,7 +197,7 @@ function LoanItemCard({ loan, handleClick }) {
             sx={{
               display: "flex",
               flexDirection: "column",
-              alignItems: "center", // Horizontally center the Avatar
+              alignItems: "center",
               flexGrow: 1,
             }}
           >
@@ -233,8 +237,8 @@ function LoanItemCard({ loan, handleClick }) {
               {/* Loan Amount */}
               <Typography
                 sx={{
-                  fontWeight: "bold", // Bold text for loan amount
-                  color: "primary.main", // Primary color for emphasis
+                  fontWeight: "bold",
+                  color: "primary.main",
                   fontSize: "1.5rem",
                 }}
               >
@@ -245,10 +249,10 @@ function LoanItemCard({ loan, handleClick }) {
               {/* Interest Rate */}
               <Typography
                 sx={{
-                  color: "text.secondary", // Lighter color for interest rate
+                  color: "text.secondary",
                   fontSize: "1rem",
                   fontWeight: "bold",
-                  marginLeft: 1, // Adds spacing between the loan amount and interest rate
+                  marginLeft: 1,
                 }}
               >
                 @ {loan.expected_interest_rate}%{" "}
@@ -298,10 +302,10 @@ function LoanItemCard({ loan, handleClick }) {
           <Box>
             <Chip
               sx={{
-                ...getStatusColor(loan.status), // Apply the background color and text color dynamically
-                margin: 1, // Optional: add some margin to separate the chip from other elements
+                ...getStatusColor(loan.status),
+                margin: 1,
               }}
-              label={loan.status} // Display the loan status in the chip
+              label={loan.status}
             />
           </Box>
         </Box>

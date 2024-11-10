@@ -11,6 +11,7 @@ import Home from "../pages/home/Home";
 import LoanRequestForm from "../components/LoanRequestForm";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
+import AdminDashboard from "../pages/admin-dashboard/AdminDashboard";
 
 const NAVIGATION = [
   {
@@ -18,48 +19,19 @@ const NAVIGATION = [
     title: "Main items",
   },
   {
-    segment: "home",
-    title: "Home",
+    segment: "dashboard",
+    title: "Dashboard",
     icon: <DashboardIcon />,
   },
-  // {
-  //   segment: "orders",
-  //   title: "Orders",
-  //   icon: <ShoppingCartIcon />,
-  // },
-  // {
-  //   kind: "divider",
-  // },
-  // {
-  //   kind: "header",
-  //   title: "Analytics",
-  // },
-  // {
-  //   segment: "reports",
-  //   title: "Reports",
-  //   icon: <BarChartIcon />,
-  //   children: [
-  //     {
-  //       segment: "sales",
-  //       title: "Sales",
-  //       icon: <DescriptionIcon />,
-  //     },
-  //     {
-  //       segment: "traffic",
-  //       title: "Traffic",
-  //       icon: <DescriptionIcon />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   segment: "integrations",
-  //   title: "Integrations",
-  //   icon: <LayersIcon />,
-  // },
   {
-    segment: "createLoanRequest",
-    title: "Create loan request",
-    icon: <AddCircleOutlineIcon />,
+    segment: "home",
+    title: "Place Bids",
+    icon: <DashboardIcon />,
+  },
+  {
+    segment: "My Bids",
+    title: "My Bids",
+    icon: <DashboardIcon />,
   },
 ];
 
@@ -83,15 +55,15 @@ function DemoPageContent({ pathname }) {
   let content;
 
   switch (pathname) {
+    case "/dashboard":
+      content = <AdminDashboard />;
+      break;
     case "/home":
       content = <Home />;
       break;
-    case "/createLoanRequest":
-      content = <LoanRequestForm />;
-      break;
-    // Add more cases for other paths
+
     default:
-      content = <div>Page Not Found</div>; // Fallback content
+      content = <div>Page Not Found</div>;
       break;
   }
 
@@ -119,11 +91,9 @@ function HomeLayout(props) {
 
   const router = useDemoRouter("/home");
 
-  // Remove this const when copying and pasting into your project.
   const demoWindow = window !== undefined ? window() : undefined;
 
   return (
-    // preview-start
     <AppProvider
       navigation={NAVIGATION}
       branding={{
@@ -137,16 +107,7 @@ function HomeLayout(props) {
         <DemoPageContent pathname={router.pathname} />
       </DashboardLayout>
     </AppProvider>
-    // preview-end
   );
 }
-
-HomeLayout.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * Remove this when copying and pasting into your project.
-   */
-  window: PropTypes.func,
-};
 
 export default HomeLayout;

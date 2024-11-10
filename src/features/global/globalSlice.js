@@ -13,10 +13,9 @@ export const globalSlice = createSlice({
         ...state.loanDetailsModalLoanId,
         ...action.payload,
       };
-    }
+    },
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { setLoanDetailsModalLoanId } = globalSlice.actions;
 export default globalSlice.reducer;

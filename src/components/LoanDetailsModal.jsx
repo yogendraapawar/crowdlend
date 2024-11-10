@@ -3,7 +3,6 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import { fetchLoanModalDetailsData } from "../api/fetchLoanData";
 import LoanRequestDetailsCard from "./LoanRequestDetailsCard";
 import { useSelector } from "react-redux";
 import BidForm from "./BidForm";
@@ -11,6 +10,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { IconButton } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setIsBidFormOpened } from "../features/flags/flagsSlice";
+import { Height } from "@mui/icons-material";
 
 const modalStyle = {
   position: "absolute",
@@ -20,10 +20,10 @@ const modalStyle = {
   width: "90%",
   bgcolor: "background.paper",
   boxShadow: 24,
-  maxHeight: "90vh",
+  height: "90%",
   display: "flex",
   flexDirection: "column",
-  padding: 0, // Remove padding from main container
+  padding: 0,
 };
 
 export default function LoanDetailsModal({
@@ -35,14 +35,15 @@ export default function LoanDetailsModal({
   const dispatch = useDispatch();
 
   const [loanDetails, setLoanDetails] = useState({
+    expected_interest_rate: 7.4,
     borrower_name: "Yogendra Pawar",
     loan_amount: 25000,
-    duration_in_months: 20,
+    loan_tenure: 20,
     application_status: "bidding",
     created_at: "23/12/2025",
-    expected_interest_rate: 7,
     bids: [
       {
+        id: "1",
         bidder_name: "ABC",
         bid_amount: 26000,
         offered_interest_rate: 7.5,
@@ -50,6 +51,7 @@ export default function LoanDetailsModal({
         offered_duration: 12,
       },
       {
+        id: "2",
         bidder_name: "ABC",
         bid_amount: 26000,
         offered_interest_rate: 7.5,
@@ -57,6 +59,7 @@ export default function LoanDetailsModal({
         offered_duration: 12,
       },
       {
+        id: "3",
         bidder_name: "ABC",
         bid_amount: 26000,
         offered_interest_rate: 7.5,
@@ -64,6 +67,7 @@ export default function LoanDetailsModal({
         offered_duration: 12,
       },
       {
+        id: "4",
         bidder_name: "ABC",
         bid_amount: 26000,
         offered_interest_rate: 7.5,
@@ -71,6 +75,7 @@ export default function LoanDetailsModal({
         offered_duration: 12,
       },
       {
+        id: "5",
         bidder_name: "ABC",
         bid_amount: 26000,
         offered_interest_rate: 7.5,
@@ -78,6 +83,7 @@ export default function LoanDetailsModal({
         offered_duration: 12,
       },
       {
+        id: "6",
         bidder_name: "ABC",
         bid_amount: 26000,
         offered_interest_rate: 7.5,
@@ -95,17 +101,10 @@ export default function LoanDetailsModal({
 
   const fetchData = async () => {
     try {
-      const response = await fetchLoanModalDetailsData(selectedLoanId);
-      console.log("response", response, selectedLoanId);
-
-      // Check if the response contains the expected data
-      if (response) {
-        setLoanDetails(response.loanDetails);
-      }
     } catch (error) {
       console.error("Error fetching loan modal details:", error);
     } finally {
-      setIsLoading(false); // Set loading to false in both success and error cases
+      setIsLoading(false);
     }
   };
 
@@ -129,7 +128,7 @@ export default function LoanDetailsModal({
   const contentStyle = {
     overflowY: "auto",
     flex: 1,
-    px: 2, // Move padding to content area
+    px: 2,
     py: 3,
   };
   return (

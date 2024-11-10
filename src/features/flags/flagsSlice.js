@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
- showLoanDetailsModal:false,
-  isBidFormOpened :false
-
+  showLoanDetailsModal: false,
+  isBidFormOpened: false,
+  isAdminLoansFilterOpen: false,
+  isHomeFilterTabOpen: false,
+  isAdminLoanDetailsModalOpen: false,
 };
 
 export const flagSlice = createSlice({
@@ -14,12 +16,28 @@ export const flagSlice = createSlice({
       state.showLoanDetailsModal = action.payload;
     },
     setIsBidFormOpened: (state, action) => {
-      state.isBidFormOpened = action.payload; // Directly assign the boolean value
+      state.isBidFormOpened = action.payload;
+    },
+    setisAdminLoansFilterOpen: (state) => {
+      console.log("setting loan", state.isAdminLoansFilterOpen);
+      state.isAdminLoansFilterOpen = !state.isAdminLoansFilterOpen;
+    },
+    setisHomeFilterTabOpen: (state) => {
+      console.log("setting loan", state.isHomeFilterTabOpen);
+      state.isHomeFilterTabOpen = !state.isHomeFilterTabOpen;
+    },
+    setIsAdminLoanDetailsModalOpen: (state, action) => {
+      state.isAdminLoanDetailsModalOpen = action.payload;
     },
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { setShowLoanDetailsModal, setIsBidFormOpened } = flagSlice.actions;
+export const {
+  setShowLoanDetailsModal,
+  setIsBidFormOpened,
+  setisAdminLoansFilterOpen,
+  setisHomeFilterTabOpen,
+  setIsAdminLoanDetailsModalOpen,
+} = flagSlice.actions;
 
 export default flagSlice.reducer;

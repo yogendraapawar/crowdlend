@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import {
+  PageContainer,
+  PageContainerToolbar,
+} from "@toolpad/core/PageContainer";
+import {
   TextField,
   Button,
   Box,
@@ -7,7 +11,7 @@ import {
   ButtonGroup,
   IconButton,
 } from "@mui/material";
-import Grid from "@mui/material/Grid2"; // Importing Grid from MUI
+import Grid from "@mui/material/Grid2";
 import CloseIcon from "@mui/icons-material/Close";
 import Card from "@mui/material/Card";
 
@@ -23,37 +27,18 @@ export default function LoanRequestForm() {
       interestRate,
       durationMonths,
     });
-    // Dispatch your loan request data or handle it accordingly
-    // dispatch(createLoanRequest({ loanAmount, interestRate, durationMonths }));
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        gap: 2,
-        padding: { xs: 2, sm: 3 }, // Add some padding for smaller screens
-      }}
-    >
+    <PageContainer breadcrumbs={false} title="Create Loan Request">
       <Box
         sx={{
           display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          marginBottom: 2,
+          flexDirection: "column",
           width: "100%",
+          gap: 2,
         }}
       >
-        <Typography
-          variant="h6"
-          sx={{ fontSize: { xs: "1rem", sm: "1.25rem" } }}
-        >
-          Create Loan Request
-        </Typography>
-      </Box>
-      <Card sx={{ px: 5, py: "5rem" }}>
         <Grid fullWidth container spacing={2}>
           <Grid width={"100%"} item xs={12}>
             {" "}
@@ -65,7 +50,7 @@ export default function LoanRequestForm() {
                 display: "flex",
                 flexDirection: "column",
                 gap: 2,
-                width: "100%", // Ensure form takes full width
+                width: "100%",
               }}
             >
               <TextField
@@ -75,8 +60,8 @@ export default function LoanRequestForm() {
                 onChange={(e) => setLoanAmount(e.target.value)}
                 type="number"
                 required
-                fullWidth // Make text field full width
-                sx={{ marginBottom: 2 }} // Add margin to separate the inputs
+                fullWidth
+                sx={{ marginBottom: 2 }}
               />
 
               <TextField
@@ -86,7 +71,7 @@ export default function LoanRequestForm() {
                 onChange={(e) => setInterestRate(e.target.value)}
                 type="number"
                 required
-                fullWidth // Make text field full width
+                fullWidth
                 sx={{ marginBottom: 2 }}
               />
 
@@ -97,7 +82,7 @@ export default function LoanRequestForm() {
                 onChange={(e) => setDurationMonths(e.target.value)}
                 type="number"
                 required
-                fullWidth // Make text field full width
+                fullWidth
                 sx={{ marginBottom: 2 }}
               />
 
@@ -105,21 +90,20 @@ export default function LoanRequestForm() {
                 sx={{
                   display: "flex",
                   justifyContent: "flex-end",
-                  gap: 2, // Add gap between buttons
-                  flexDirection: { xs: "column", sm: "row" }, // Stack buttons on mobile, align on row for larger screens
+                  gap: 2,
+                  flexDirection: { xs: "column", sm: "row" },
                 }}
               >
                 <Button
                   variant="outlined"
                   onClick={() => {
                     console.log("Dispatching close action");
-                    // dispatch(setIsLoanRequestFormOpened(false));
                   }}
                   sx={{
                     marginBottom: { xs: 2, sm: 0 },
                   }}
                 >
-                  Cancel
+                  Clear
                 </Button>
                 <Button variant="contained" type="submit" sx={{}}>
                   Submit
@@ -128,7 +112,7 @@ export default function LoanRequestForm() {
             </Box>
           </Grid>
         </Grid>
-      </Card>
-    </Box>
+      </Box>
+    </PageContainer>
   );
 }

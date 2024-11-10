@@ -12,23 +12,19 @@ import { Collapse } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import Card from "@mui/material/Card";
-
+import { useSelector } from "react-redux";
 const FilterTab = () => {
   const [interestRateInputs, setInterestRateInputs] = useState(["0", "10"]);
   const [amountInputs, setAmountInputs] = useState(["0", "50000"]);
   const [durationInputs, setDurationInputs] = useState(["0", "36"]);
-  const [loanStatus, setLoanStatus] = useState("Select"); // For loan status dropdown
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-
-  const toggleFilter = () => {
-    setIsFilterOpen((prev) => !prev);
-  };
+  const [loanStatus, setLoanStatus] = useState("Select");
+  const isFilterOpen = useSelector((state) => state.flags.isHomeFilterTabOpen);
 
   const resetFilters = () => {
     setInterestRateInputs(["0", "10"]);
     setAmountInputs(["0", "50000"]);
     setDurationInputs(["0", "36"]);
-    setLoanStatus(""); // Reset loan status
+    setLoanStatus("");
   };
 
   const handleInputChange = (index, value, type) => {
@@ -55,34 +51,12 @@ const FilterTab = () => {
       interestRate: interestRateInputs,
       amount: amountInputs,
       duration: durationInputs,
-      loanStatus: loanStatus, // Log selected loan status
+      loanStatus: loanStatus,
     });
   };
 
   return (
     <Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Box
-          sx={{
-            textAlign: "left",
-            width: "100%",
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            color: "text.secondary",
-          }}
-        >
-          Loan Requests
-        </Box>
-        <IconButton onClick={toggleFilter}>
-          {!isFilterOpen ? <FilterAltIcon /> : <FilterAltOffIcon />}
-        </IconButton>
-      </Box>
       <Collapse in={isFilterOpen}>
         <Card
           sx={{
@@ -90,7 +64,7 @@ const FilterTab = () => {
             p: 3,
             borderRadius: 2,
             marginTop: 2,
-            color: "palette.text.primary", // Set font color based on theme
+            color: "palette.text.primary",
           }}
         >
           <Grid
@@ -101,7 +75,7 @@ const FilterTab = () => {
           >
             <Grid item xs={12}>
               <Typography fontSize={14} textAlign={"left"} gutterBottom>
-                Interest Rate (%)
+                Interest Rate Range (%)
               </Typography>
               <Box
                 sx={{
@@ -147,7 +121,7 @@ const FilterTab = () => {
 
             <Grid item xs={12}>
               <Typography fontSize={14} textAlign={"left"} gutterBottom>
-                Amount (Rupees)
+                Amount Range(Rupees)
               </Typography>
               <Box
                 sx={{
@@ -193,7 +167,7 @@ const FilterTab = () => {
 
             <Grid item xs={12}>
               <Typography fontSize={14} textAlign={"left"} gutterBottom>
-                Duration (Months)
+                Duration Range(Months)
               </Typography>
               <Box
                 sx={{

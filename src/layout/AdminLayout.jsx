@@ -6,57 +6,19 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { useDemoRouter } from "@toolpad/core/internal";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import Home from "../pages/home/Home";
-import LoanRequestForm from "../components/LoanRequestForm";
-import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
 import AdminDashboard from "../pages/admin-dashboard/AdminDashboard";
-
+import PaymentsIcon from "@mui/icons-material/Payments";
+import AdminLoanPage from "../pages/admin-loan-page/AdminLoanPage";
 const NAVIGATION = [
   {
     kind: "header",
     title: "Main items",
   },
   {
-    segment: "/dashboard",
-    title: "Dashboard",
-    icon: <DashboardIcon />,
+    segment: "loans",
+    title: "Loans",
+    icon: <PaymentsIcon />,
   },
-  // {
-  //   segment: "orders",
-  //   title: "Orders",
-  //   icon: <ShoppingCartIcon />,
-  // },
-  // {
-  //   kind: "divider",
-  // },
-  // {
-  //   kind: "header",
-  //   title: "Analytics",
-  // },
-  // {
-  //   segment: "reports",
-  //   title: "Reports",
-  //   icon: <BarChartIcon />,
-  //   children: [
-  //     {
-  //       segment: "sales",
-  //       title: "Sales",
-  //       icon: <DescriptionIcon />,
-  //     },
-  //     {
-  //       segment: "traffic",
-  //       title: "Traffic",
-  //       icon: <DescriptionIcon />,
-  //     },
-  //   ],
-  // },
-  // {
-  //   segment: "integrations",
-  //   title: "Integrations",
-  //   icon: <LayersIcon />,
-  // },
 ];
 
 const demoTheme = createTheme({
@@ -77,12 +39,12 @@ const demoTheme = createTheme({
 
 function DemoPageContent({ pathname }) {
   let content;
+  console.log("CURRENT_PATH_IN_DASHBOARD", pathname);
 
   switch (pathname) {
-    case "/dashboard":
-      content = <AdminDashboard />;
+    case "/loans":
+      content = <AdminLoanPage />;
       break;
-    // Add more cases for other paths
     default:
       content = <div>Page Not Found</div>; // Fallback content
       break;
@@ -96,6 +58,7 @@ function DemoPageContent({ pathname }) {
         flexDirection: "column",
         alignItems: "center",
         textAlign: "center",
+        width: "100%",
       }}
     >
       {content}
@@ -110,7 +73,7 @@ DemoPageContent.propTypes = {
 function AdminLayout(props) {
   const { window } = props;
 
-  const router = useDemoRouter("/dashboard");
+  const router = useDemoRouter("/loans");
 
   // Remove this const when copying and pasting into your project.
   const demoWindow = window !== undefined ? window() : undefined;

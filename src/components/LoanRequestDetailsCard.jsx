@@ -15,6 +15,13 @@ export default function LoanRequestDetailsCard({
 }) {
   const dispatch = useDispatch();
   console.log("loanDetails keys", Object.keys(loanDetails));
+  const VISIBLE_FIELDS = [
+    "bidder_name",
+    "bid_amount",
+    "offered_interest_rate",
+    "bid_status",
+    "offered_duration",
+  ];
   const bidHeadCells = [
     {
       id: "bidder_name",
@@ -51,7 +58,7 @@ export default function LoanRequestDetailsCard({
   const personalDetails = {
     borrower_name: "Yogendra Pawar",
     loan_amount: 25000,
-    duration_in_months: 20,
+    loan_tenure: 20,
     expected_interest_rate: 7.4,
     created_at: "25/10/2024",
     date_of_birth: "10/01/2003",
@@ -74,16 +81,21 @@ export default function LoanRequestDetailsCard({
         gap: 2,
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-        }}
-      >
-        {/* selfie image container */}
-        <Box>
-          <img src={manImage} alt="applicant" />
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Box
+          sx={{
+            width: 150,
+            height: 150,
+            borderRadius: "50%",
+            overflow: "hidden",
+            mb: 2,
+          }}
+        >
+          <img
+            src={manImage}
+            alt="Selfie"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
         </Box>
       </Box>
       <Paper sx={{ padding: 2 }} elevation={5}>
@@ -104,12 +116,12 @@ export default function LoanRequestDetailsCard({
             }}
           >
             <Typography
-              variant="h6"
               sx={{
                 width: "100%",
                 textAlign: "left",
                 fontWeight: "bold",
                 color: "primary.main",
+                fontSize: "1rem",
               }}
             >
               Basic Details
@@ -223,12 +235,17 @@ export default function LoanRequestDetailsCard({
               textAlign: "left",
               fontWeight: "bold",
               color: "primary.main",
+              fontSize: "1rem",
             }}
           >
             Bids offered
           </Typography>
           <Divider />
-          <EnhancedTable rows={loanDetails?.bids} headCells={bidHeadCells} />
+          <EnhancedTable
+            rows={loanDetails?.bids}
+            headCells={bidHeadCells}
+            VISIBLE_FIELDS={VISIBLE_FIELDS}
+          />
         </Box>
       </Paper>
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>

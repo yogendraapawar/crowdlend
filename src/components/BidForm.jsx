@@ -7,17 +7,16 @@ import {
   ButtonGroup,
   Paper,
 } from "@mui/material";
-import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid2"; // Importing Grid from MUI
+import Grid from "@mui/material/Grid2";
 import { useDispatch } from "react-redux";
 import { setIsBidFormOpened } from "../features/flags/flagsSlice";
 
 export default function BidForm({ loanDetails }) {
-  const [months, setMonths] = useState(loanDetails.duration_in_months || ""); // Hardcoded value
+  const [months, setMonths] = useState(loanDetails.loan_tenure || "");
   const [interestRate, setInterestRate] = useState(
     loanDetails.expected_interest_rate || ""
-  ); // Hardcoded value
-  const [amount, setAmount] = useState(loanDetails.loan_amount || ""); // Hardcoded value
+  );
+  const [amount, setAmount] = useState(loanDetails.loan_amount || "");
   const [monthlyPayment, setMonthlyPayment] = useState(0);
   const [totalPayment, setTotalPayment] = useState(0);
   const [loanMonthlyPayment, setLoanMonthlyPayment] = useState(0);
@@ -27,30 +26,28 @@ export default function BidForm({ loanDetails }) {
 
   const dispatch = useDispatch();
 
-  // Calculate payment based on loan details
   useEffect(() => {
     if (
       loanDetails.loan_amount &&
       loanDetails.expected_interest_rate &&
-      loanDetails.duration_in_months
+      loanDetails.loan_tenure
     ) {
       const principal = parseFloat(loanDetails.loan_amount);
       const interest =
         parseFloat(loanDetails.expected_interest_rate) / 100 / 12;
-      const totalMonths = parseInt(loanDetails.duration_in_months);
+      const totalMonths = parseInt(loanDetails.loan_tenure);
 
       const payment =
         (principal * interest) / (1 - Math.pow(1 + interest, -totalMonths));
       const total = payment * totalMonths;
-      const interestAmount = total - principal; // Calculate total interest
+      const interestAmount = total - principal;
 
       setLoanMonthlyPayment(payment.toFixed(2));
       setLoanTotalPayment(total.toFixed(2));
-      setLoanInterestAmount(interestAmount.toFixed(2)); // Set loan interest amount
+      setLoanInterestAmount(interestAmount.toFixed(2));
     }
   }, [loanDetails]);
 
-  // Calculate payment based on user input
   useEffect(() => {
     console.log("loan details from bid form", loanDetails);
     if (months && interestRate && amount) {
@@ -61,22 +58,21 @@ export default function BidForm({ loanDetails }) {
       const payment =
         (principal * interest) / (1 - Math.pow(1 + interest, -totalMonths));
       const total = payment * totalMonths;
-      const interestAmount = total - principal; // Calculate total interest
+      const interestAmount = total - principal;
 
       setMonthlyPayment(payment.toFixed(2));
       setTotalPayment(total.toFixed(2));
-      setUserInterestAmount(interestAmount.toFixed(2)); // Set user interest amount
+      setUserInterestAmount(interestAmount.toFixed(2));
     } else {
       setMonthlyPayment(0);
       setTotalPayment(0);
-      setUserInterestAmount(0); // Reset user interest amount
+      setUserInterestAmount(0);
     }
   }, [months, interestRate, amount]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("Form submitted:", { months, interestRate, amount });
-    // You might want to dispatch your form data here
   };
 
   const showCalculations = months && interestRate && amount;
@@ -123,7 +119,7 @@ export default function BidForm({ loanDetails }) {
                 Duration:
               </Typography>
               <Typography variant="body2" sx={{ flex: 1, textAlign: "left" }}>
-                {loanDetails.duration_in_months} months
+                {loanDetails.loan_tenure} months
               </Typography>
             </Box>
             <Box
