@@ -33,12 +33,7 @@ function App() {
     const role = localStorage.getItem("role");
 
     if (isAuthenticated) {
-      return (
-        <Navigate
-          to={role === "admin" ? "/admin/dashboard" : "/home"}
-          replace
-        />
-      );
+      return <Navigate to={role === "admin" ? "/admin" : "/home"} replace />;
     }
     return <SignIn />;
   };
@@ -51,9 +46,9 @@ function App() {
           <Route
             path="/home"
             element={
-              <ProtectedRoute allowedRole="lender">
-                <HomeLayout />
-              </ProtectedRoute>
+              // <ProtectedRoute allowedRole="lender">
+              <HomeLayout />
+              // </ProtectedRoute>
             }
           />
 
@@ -62,11 +57,11 @@ function App() {
 
           {/* Protected admin route */}
           <Route
-            path="/admin/dashboard"
+            path="/admin"
             element={
-              <ProtectedRoute allowedRole="admin">
-                <AdminLayout />
-              </ProtectedRoute>
+              // <ProtectedRoute allowedRole="admin">
+              <AdminLayout />
+              // </ProtectedRoute>
             }
           />
 

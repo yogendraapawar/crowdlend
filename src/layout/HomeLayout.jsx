@@ -91,7 +91,7 @@ DemoPageContent.propTypes = {
 function HomeLayout(props) {
   const { window } = props;
 
-  const router = useDemoRouter("/home");
+  const router = useDemoRouter("/dashboard");
 
   const demoWindow = window !== undefined ? window() : undefined;
 

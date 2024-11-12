@@ -6,6 +6,7 @@ const initialState = {
   isAdminLoansFilterOpen: false,
   isHomeFilterTabOpen: false,
   isAdminLoanDetailsModalOpen: false,
+  isMyBidsFilterOpen: false,
 };
 
 export const flagSlice = createSlice({
@@ -29,6 +30,9 @@ export const flagSlice = createSlice({
     setIsAdminLoanDetailsModalOpen: (state, action) => {
       state.isAdminLoanDetailsModalOpen = action.payload;
     },
+    setIsMyBidsFilterOpen: (state, action) => {
+      state.isMyBidsFilterOpen = !state.isMyBidsFilterOpen;
+    },
   },
 });
 
@@ -38,6 +42,7 @@ export const {
   setisAdminLoansFilterOpen,
   setisHomeFilterTabOpen,
   setIsAdminLoanDetailsModalOpen,
+  setIsMyBidsFilterOpen,
 } = flagSlice.actions;
 
 export default flagSlice.reducer;

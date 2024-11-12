@@ -5,16 +5,16 @@ import { Collapse } from "@mui/material";
 import Card from "@mui/material/Card";
 import { useSelector } from "react-redux";
 
-const LoansFilter = () => {
+const MyBidsFilter = () => {
   const [dateRange, setDateRange] = useState({ from: "", to: "" });
   const [status, setStatus] = useState(""); // For storing selected loan status
-  const isFilterOpen = useSelector(
-    (state) => state.flags.isAdminLoansFilterOpen
-  );
+  const [bidStatus, setBidStatus] = useState(""); // For storing selected bid status
+  const isFilterOpen = useSelector((state) => state.flags.isMyBidsFilterOpen);
 
   const resetFilters = () => {
     setDateRange({ from: "", to: "" });
-    setStatus(""); // Reset the status filter
+    setStatus(""); // Reset the loan status filter
+    setBidStatus(""); // Reset the bid status filter
   };
 
   const handleDateChange = (e, field) => {
@@ -39,11 +39,22 @@ const LoansFilter = () => {
   };
 
   const handleStatusChange = (e) => {
-    setStatus(e.target.value); // Update the status filter
+    setStatus(e.target.value); // Update the loan status filter
+  };
+
+  const handleBidStatusChange = (e) => {
+    setBidStatus(e.target.value); // Update the bid status filter
   };
 
   const handleSubmit = () => {
-    console.log("Selected Filters - Date Range:", dateRange, "Status:", status);
+    console.log(
+      "Selected Filters - Date Range:",
+      dateRange,
+      "Loan Status:",
+      status,
+      "Bid Status:",
+      bidStatus
+    );
   };
 
   useEffect(() => {
@@ -140,6 +151,29 @@ const LoansFilter = () => {
                 <MenuItem value="closed">Closed</MenuItem>
               </TextField>
             </Grid>
+
+            {/* Bid Status Filter (Normal Dropdown) */}
+            <Grid item xs={12}>
+              <Typography fontSize={14} textAlign={"left"} gutterBottom>
+                Bid Status
+              </Typography>
+              <TextField
+                select
+                fullWidth
+                size="small"
+                value={bidStatus}
+                onChange={handleBidStatusChange}
+                variant="outlined"
+                sx={{
+                  "& .MuiInputBase-root": {
+                    height: "30px",
+                  },
+                }}
+              >
+                <MenuItem value="open">Open</MenuItem>
+                <MenuItem value="closed">Closed</MenuItem>
+              </TextField>
+            </Grid>
           </Grid>
 
           <Grid sx={{ justifyContent: "end", display: "flex", columnGap: 2 }}>
@@ -168,4 +202,4 @@ const LoansFilter = () => {
   );
 };
 
-export default LoansFilter;
+export default MyBidsFilter;

@@ -1,10 +1,17 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import LoansList from "../../components/LoansList";
-import { PageContainer } from "@toolpad/core/PageContainer";
+import {
+  PageContainer,
+  PageContainerToolbar,
+} from "@toolpad/core/PageContainer";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 
 import FilterTab from "../../components/FilterTab";
 import LoansFilter from "../admin-loan-page/LoansFilter";
+import MyBidsFilter from "../admin-loan-page/MyLoansFilter";
+import { setIsMyBidsFilterOpen } from "../../features/flags/flagsSlice";
+import { useDispatch } from "react-redux";
 
 export default function MyBids() {
   const loanData = [
@@ -99,8 +106,37 @@ export default function MyBids() {
     },
   ];
 
+  function PageToolbar() {
+    const dispatch = useDispatch();
+    const toggleFilter = () => {
+      console.log("toggling my bid");
+      dispatch(setIsMyBidsFilterOpen());
+    };
+
+    return (
+      <PageContainerToolbar>
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+          }}
+        >
+          <IconButton onClick={toggleFilter}>
+            <FilterAltIcon />
+          </IconButton>
+        </Box>
+      </PageContainerToolbar>
+    );
+  }
+
   return (
-    <PageContainer breadcrumbs={false} title="My Bids">
+    <PageContainer
+      breadcrumbs={false}
+      title="My Bids"
+      slots={{ toolbar: PageToolbar }}
+    >
       <Box
         sx={{
           width: "100%",
@@ -110,7 +146,7 @@ export default function MyBids() {
           gap: 2,
         }}
       >
-        <LoansFilter />
+        <MyBidsFilter />
         <LoansList />
       </Box>
     </PageContainer>
