@@ -12,12 +12,11 @@ import LoanRequestForm from "../components/LoanRequestForm";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import AdminDashboard from "../pages/admin-dashboard/AdminDashboard";
+import MyBids from "../pages/my-bids/MyBids";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import GavelIcon from "@mui/icons-material/Gavel";
 
 const NAVIGATION = [
-  {
-    kind: "header",
-    title: "Main items",
-  },
   {
     segment: "dashboard",
     title: "Dashboard",
@@ -26,12 +25,12 @@ const NAVIGATION = [
   {
     segment: "home",
     title: "Place Bids",
-    icon: <DashboardIcon />,
+    icon: <GavelIcon />,
   },
   {
-    segment: "My Bids",
+    segment: "my-bids",
     title: "My Bids",
-    icon: <DashboardIcon />,
+    icon: <ListAltIcon />,
   },
 ];
 
@@ -60,6 +59,9 @@ function DemoPageContent({ pathname }) {
       break;
     case "/home":
       content = <Home />;
+      break;
+    case "/my-bids":
+      content = <MyBids />;
       break;
 
     default:

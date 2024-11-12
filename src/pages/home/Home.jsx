@@ -40,6 +40,7 @@ export default function Home() {
   return (
     <PageContainer
       breadcrumbs={false}
+      sx={{ width: "100%" }}
       title="Loans"
       slots={{ toolbar: HomePageToolbar }}
     >

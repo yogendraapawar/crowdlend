@@ -166,6 +166,7 @@ export default function LoanDetailsModal({
               {isBidFormOpened ? "Bid Form" : "Loan Details"}
             </Box>
             <IconButton
+              sx={{ display: isBidFormOpened ? "none" : "block" }}
               onClick={() => {
                 handleModalClose();
                 dispatch(setIsBidFormOpened(false));

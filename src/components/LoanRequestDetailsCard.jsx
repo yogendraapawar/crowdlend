@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import Divider from "@mui/material/Divider";
 import DownloadIcon from "@mui/icons-material/Download";
 import manImage from "../assets/man.jpg";
+import { Card, CardHeader, CardContent } from "@mui/material";
 
 export default function LoanRequestDetailsCard({
   handleModalClose,
@@ -15,6 +16,13 @@ export default function LoanRequestDetailsCard({
 }) {
   const dispatch = useDispatch();
   console.log("loanDetails keys", Object.keys(loanDetails));
+  const isMyLoansPage = true;
+  const offeredData = {
+    "Loan Amount": "₹25,000",
+    "Interest Rate": "7.4%",
+    Duration: "20 months",
+    Status: "Ongoing",
+  };
   const VISIBLE_FIELDS = [
     "bidder_name",
     "bid_amount",
@@ -81,24 +89,87 @@ export default function LoanRequestDetailsCard({
         gap: 2,
       }}
     >
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", sm: "column", md: "row" },
+          width: "100%",
+          justifyContent: "center",
+        }}
+      >
         <Box
           sx={{
-            width: 150,
-            height: 150,
-            borderRadius: "50%",
-            overflow: "hidden",
-            mb: 2,
+            flexGrow: 1,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <img
-            src={manImage}
-            alt="Selfie"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
+          <Box
+            sx={{
+              width: 200,
+              height: 200,
+              borderRadius: "50%",
+              overflow: "hidden",
+              mb: 2,
+            }}
+          >
+            <img
+              src={manImage}
+              alt="Selfie"
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          </Box>
         </Box>
+        {true && (
+          <Box
+            sx={{
+              flexGrow: 1,
+            }}
+          >
+            <Card sx={{ p: 1 }}>
+              <CardContent>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    width: "100%",
+                    textAlign: "left",
+                    fontWeight: "bold",
+                    color: "primary.main",
+                    fontSize: "1rem",
+                  }}
+                >
+                  My offer
+                </Typography>
+                <Divider sx={{ marginTop: "1rem", marginBottom: "1rem" }} />
+                {Object.entries(offeredData).map(([key, value], index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      py: 0.5,
+                    }}
+                  >
+                    <Typography
+                      fontSize={"14px"}
+                      sx={{ color: "text.secondary", fontWeight: "bold" }}
+                    >
+                      {key}
+                    </Typography>
+                    <Typography
+                      sx={{ color: "text.primary", fontWeight: "bold" }}
+                    >
+                      {value}
+                    </Typography>
+                  </Box>
+                ))}
+              </CardContent>
+            </Card>
+          </Box>
+        )}
       </Box>
-      <Paper sx={{ padding: 2 }} elevation={5}>
+      <Paper sx={{ padding: 2 }}>
         <Box
           sx={{
             display: "flex",
@@ -133,7 +204,6 @@ export default function LoanRequestDetailsCard({
                   <Box sx={{ display: "flex", width: "100%" }}>
                     <Typography
                       fontSize={"14px"}
-                      fontWeight={"semibold"}
                       sx={{
                         width: "100%",
                         color: "text.secondary",
@@ -158,7 +228,7 @@ export default function LoanRequestDetailsCard({
           </Box>
         </Box>
       </Paper>
-      <Paper sx={{ padding: 2 }} elevation={5}>
+      <Paper sx={{ padding: 2 }}>
         <Box
           sx={{
             display: "flex",
@@ -219,7 +289,7 @@ export default function LoanRequestDetailsCard({
           </Box>
         </Box>
       </Paper>
-      <Paper sx={{ padding: 2 }} elevation={5}>
+      <Paper sx={{ padding: 2 }}>
         <Box
           sx={{
             display: "flex",
@@ -248,14 +318,24 @@ export default function LoanRequestDetailsCard({
           />
         </Box>
       </Paper>
-      <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+      <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>
+        <Button
+          variant="contained"
+          onClick={() => {
+            dispatch(setIsBidFormOpened(true));
+          }}
+          color="error"
+          hidden={false}
+        >
+          {"Delete"}
+        </Button>
         <Button
           variant="contained"
           onClick={() => {
             dispatch(setIsBidFormOpened(true));
           }}
         >
-          Bid
+          {isMyLoansPage ? "Edit" : "Bid"}
         </Button>
       </Box>
     </Box>

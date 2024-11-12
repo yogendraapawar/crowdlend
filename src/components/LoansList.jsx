@@ -1,3 +1,9 @@
+import {} from "@mui/material";
+import { styled } from "@mui/material/styles";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import PercentIcon from "@mui/icons-material/Percent";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
@@ -9,6 +15,7 @@ import FilterTab from "./FilterTab";
 import Grid from "@mui/material/Grid2";
 import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";
+import GavelIcon from "@mui/icons-material/Gavel";
 
 export default function LoansList() {
   const loanData = [
@@ -22,6 +29,7 @@ export default function LoansList() {
       loan_status: "ongoing",
       created_at: "25/10/2024",
       status: "bidding",
+      bids_count: Math.floor(Math.random() * 151) + 50,
     },
     {
       id: "2",
@@ -32,6 +40,7 @@ export default function LoansList() {
       expected_interest_rate: 6.5,
       created_at: "15/10/2024",
       status: "completed",
+      bids_count: Math.floor(Math.random() * 151) + 50,
     },
     {
       id: "3",
@@ -42,6 +51,7 @@ export default function LoansList() {
       expected_interest_rate: 8.0,
       created_at: "10/10/2024",
       status: "bidding",
+      bids_count: Math.floor(Math.random() * 151) + 50,
     },
     {
       id: "4",
@@ -52,6 +62,7 @@ export default function LoansList() {
       expected_interest_rate: 5.5,
       created_at: "05/10/2024",
       status: "closed",
+      bids_count: Math.floor(Math.random() * 151) + 50,
     },
     {
       id: "5",
@@ -62,6 +73,7 @@ export default function LoansList() {
       expected_interest_rate: 7.0,
       created_at: "20/09/2024",
       status: "bidding",
+      bids_count: Math.floor(Math.random() * 151) + 50,
     },
     {
       id: "6",
@@ -72,6 +84,7 @@ export default function LoansList() {
       expected_interest_rate: 9.0,
       created_at: "01/09/2024",
       status: "completed",
+      bids_count: Math.floor(Math.random() * 151) + 50,
     },
     {
       id: "7",
@@ -82,6 +95,7 @@ export default function LoansList() {
       expected_interest_rate: 6.8,
       created_at: "30/08/2024",
       status: "bidding",
+      bids_count: Math.floor(Math.random() * 151) + 50,
     },
     {
       id: "8",
@@ -92,6 +106,7 @@ export default function LoansList() {
       expected_interest_rate: 7.2,
       created_at: "25/07/2024",
       status: "completed",
+      bids_count: Math.floor(Math.random() * 151) + 50,
     },
   ];
 
@@ -122,10 +137,14 @@ export default function LoansList() {
 
   return (
     <>
-      <Box display="flex" flexDirection="column" sx={{ width: "100%", gap: 2 }}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        sx={{ width: "100%", gap: 2, height: "100%" }}
+      >
         <Grid container spacing={2}>
           {currentLoans.map((loan) => (
-            <Grid sx={{ width: "100%" }} size={{ sm: 12, md: 6, lg: 4 }}>
+            <Grid sx={{ width: "100%" }} size={{ sm: 12, md: 12, lg: 4 }}>
               <LoanItemCard loan={loan} handleClick={handleClick} />
             </Grid>
           ))}
@@ -160,156 +179,196 @@ function generateRandomColor(name) {
   return color;
 }
 
+const StyledCard = styled(Card)(({ theme }) => ({
+  position: "relative",
+  overflow: "hidden",
+  height: "100%",
+
+  transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+  "&:hover": {
+    transform: "translateY(-4px)",
+    boxShadow: theme.shadows[1],
+  },
+}));
+
+const GlowCircle = styled(Box)(({ theme }) => ({
+  position: "absolute",
+  borderRadius: "50%",
+  filter: "blur(40px)",
+  zIndex: 0,
+}));
+
+const StatusChip = styled(Chip)(({ status, theme }) => {
+  const colors = {
+    bidding: {
+      bg: theme.palette.warning.main,
+      hover: theme.palette.warning.dark,
+    },
+    completed: {
+      bg: theme.palette.success.main,
+      hover: theme.palette.success.dark,
+    },
+    closed: {
+      bg: theme.palette.error.main,
+      hover: theme.palette.error.dark,
+    },
+    default: {
+      bg: theme.palette.grey[500],
+      hover: theme.palette.grey[700],
+    },
+  };
+
+  const statusColor = colors[status] || colors.default;
+
+  return {
+    backgroundColor: statusColor.bg,
+    color: "#fff",
+    fontWeight: 600,
+    padding: "4px 8px",
+    height: "28px",
+    "&:hover": {
+      backgroundColor: statusColor.hover,
+    },
+    transition: "background-color 0.2s ease-in-out",
+  };
+});
+
+const InfoRow = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+});
+
 function LoanItemCard({ loan, handleClick }) {
   const avatarColor = generateRandomColor(loan.borrower_name);
-  const getStatusColor = (status) => {
-    switch (status) {
-      case "bidding":
-        return { backgroundColor: "orange", color: "white" };
-      case "completed":
-        return { backgroundColor: "green", color: "white" };
-      case "closed":
-        return { backgroundColor: "red", color: "white" };
-      default:
-        return { backgroundColor: "grey", color: "white" };
-    }
-  };
+
   return (
-    <Card
-      key={loan.loan_id}
-      sx={{
-        display: "flex",
-        width: "100%",
-        boxShadow: 3,
-        borderRadius: 2,
-        mb: 2,
-      }}
-    >
+    <StyledCard>
+      <GlowCircle sx={{ top: -100, right: -100, width: 200, height: 200 }} />
+      <GlowCircle sx={{ bottom: -80, left: -80, width: 160, height: 160 }} />
+
       <CardActionArea
         onClick={() => handleClick(loan.loan_id)}
-        sx={{ width: "100%", px: 2, py: 3 }}
+        sx={{ height: "100%" }}
       >
-        <Box
-          sx={{ width: "100%", display: "flex", flexDirection: "row", gap: 2 }}
-        >
-          {/* Avatar container */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              flexGrow: 1,
-            }}
-          >
+        <Box sx={{ p: 3, position: "relative", zIndex: 1 }}>
+          {/* Header Section */}
+          <Box sx={{ display: "flex", gap: 3, mb: 2.5 }}>
+            {/* Avatar */}
             <Avatar
               sx={{
-                width: "4rem",
-                height: "4rem",
-                backgroundColor: avatarColor,
+                width: 64,
+                height: 64,
+                bgcolor: avatarColor,
+                fontSize: "1.75rem",
+                fontWeight: "bold",
+                boxShadow: 2,
               }}
             >
-              {loan.borrower_name.slice(0, 1)}{" "}
-              {/* Display first letter of name */}
+              {loan.borrower_name.slice(0, 1)}
             </Avatar>
+
+            {/* Name and Date */}
+            <Box sx={{ flex: 1 }}>
+              <Typography
+                variant="h6"
+                sx={{ mb: 0.5, fontWeight: 600, textAlign: "left" }}
+              >
+                {loan.borrower_name}
+              </Typography>
+              <InfoRow>
+                <CalendarTodayIcon
+                  sx={{ fontSize: "0.9rem", color: "text.secondary" }}
+                />
+                <Typography variant="body2" color="text.secondary">
+                  {loan.created_at}
+                </Typography>
+              </InfoRow>
+            </Box>
+
+            {/* Status Chip */}
+            <StatusChip label={loan.status} status={loan.status} size="small" />
           </Box>
 
-          {/* Loan details container */}
-          <Box sx={{ flexGrow: 3 }}>
-            {/* Name container */}
-            <Box
-              sx={{
-                width: "100%",
-                textAlign: "left",
-                fontSize: "1rem",
-                fontWeight: "bold",
-              }}
-            >
-              {loan.borrower_name}
-            </Box>
-            {/* Amount @ interest rate */}
+          {/* Loan Details Section */}
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            {/* Amount and Interest */}
             <Box
               sx={{
                 display: "flex",
-                flexDirection: "row",
                 alignItems: "center",
+                gap: 2,
+                bgcolor: "action.hover",
+                borderRadius: 2,
+                p: 2,
               }}
             >
-              {/* Loan Amount */}
-              <Typography
-                sx={{
-                  fontWeight: "bold",
-                  color: "primary.main",
-                  fontSize: "1.5rem",
-                }}
-              >
-                ₹{loan.loan_amount.toLocaleString()}{" "}
-                {/* Formatting loan amount with commas */}
-              </Typography>
+              {/* Amount */}
+              <InfoRow sx={{ flex: 1 }}>
+                <CurrencyRupeeIcon color="primary" />
+                <Typography variant="h5" color="primary" fontWeight="bold">
+                  {loan.loan_amount.toLocaleString()}
+                </Typography>
+              </InfoRow>
 
               {/* Interest Rate */}
-              <Typography
-                sx={{
-                  color: "text.secondary",
-                  fontSize: "1rem",
-                  fontWeight: "bold",
-                  marginLeft: 1,
-                }}
-              >
-                @ {loan.expected_interest_rate}%{" "}
-                {/* Formatting interest rate with percentage */}
-              </Typography>
+              <InfoRow>
+                <PercentIcon sx={{ color: "success.main" }} />
+                <Typography
+                  variant="subtitle1"
+                  sx={{ color: "success.main", fontWeight: 600 }}
+                >
+                  {loan.expected_interest_rate}%
+                </Typography>
+              </InfoRow>
             </Box>
-            {/* loan duration */}
-            <Box
-              sx={{ width: "100%", textAlign: "left", color: "text.secondary" }}
-            >
-              {/* Use Typography for the text with different styles */}
-              <Typography component="span" sx={{ color: "text.secondary" }}>
-                {"for "}
-              </Typography>
 
-              <Typography
-                component="span"
-                sx={{
-                  fontWeight: "bold",
-                  color: "text.primary",
-                  fontSize: "1rem",
-                }}
-              >
-                {loan.loan_duration}
-              </Typography>
-
-              <Typography component="span" sx={{ color: "text.secondary" }}>
-                {" months"}
-              </Typography>
-            </Box>
-            {/* date */}
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            width: "100%",
-            textAlign: "right",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignContent: "center",
-            alignItems: "center",
-            marginTop: "1rem",
-          }}
-        >
-          <Box>{loan.created_at}</Box>
-          <Box>
-            <Chip
+            {/* Duration */}
+            <InfoRow
               sx={{
-                ...getStatusColor(loan.status),
-                margin: 1,
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
               }}
-              label={loan.status}
-            />
+            >
+              {/* Loan Duration Section */}
+              <Box sx={{ display: "flex", alignItems: "center", flex: 1 }}>
+                <AccessTimeIcon sx={{ color: "text.secondary" }} />
+                <Typography color="text.secondary" sx={{ ml: 1 }}>
+                  <Box
+                    component="span"
+                    sx={{ fontWeight: 600, color: "text.primary" }}
+                  >
+                    {loan.loan_duration}
+                  </Box>
+                  {" months"}
+                </Typography>
+              </Box>
+
+              {/* Bids Count Section */}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  flex: 1,
+                  justifyContent: "flex-end",
+                }}
+              >
+                <GavelIcon sx={{ color: "text.secondary", mr: 1 }} />
+                <Typography color="text.secondary">
+                  <Box
+                    component="span"
+                    sx={{ fontWeight: 600, color: "text.primary" }}
+                  >
+                    {loan.bids_count}
+                  </Box>
+                  {" bids"}
+                </Typography>
+              </Box>
+            </InfoRow>
           </Box>
         </Box>
       </CardActionArea>
-    </Card>
+    </StyledCard>
   );
 }

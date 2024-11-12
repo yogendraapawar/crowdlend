@@ -96,6 +96,8 @@ export default function AdminDashboard() {
                   borderRadius: 2,
                   height: "100%",
                   position: "relative",
+                  borderLeft: `6px solid`,
+                  borderColor: "primary.main",
                 }}
               >
                 {/* Tooltip Icon */}

@@ -1,6 +1,6 @@
 import React from "react";
 import LoansFilter from "./LoansFilter";
-import { Box } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 import EnhancedTable from "../../components/TableComponent";
 import { IconButton } from "@mui/material";
 import {
@@ -86,14 +86,14 @@ export default function AdminLoanPage() {
     >
       <Box sx={{ width: "100%", display: "flex", flexDirection: "column" }}>
         <LoansFilter />
-        <Box sx={{ flexGrow: 1 }}>
+        <Paper sx={{ flexGrow: 1 }}>
           <EnhancedTable
             rows={loanDetails}
             headCells={bidHeadCells}
             rowActions={rowActions}
             VISIBLE_FIELDS={VISIBLE_FIELDS}
           />
-        </Box>
+        </Paper>
       </Box>
       <AdminLoanModal />
     </PageContainer>

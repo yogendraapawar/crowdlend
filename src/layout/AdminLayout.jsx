@@ -11,10 +11,6 @@ import PaymentsIcon from "@mui/icons-material/Payments";
 import AdminLoanPage from "../pages/admin-loan-page/AdminLoanPage";
 const NAVIGATION = [
   {
-    kind: "header",
-    title: "Main items",
-  },
-  {
     segment: "loans",
     title: "Loans",
     icon: <PaymentsIcon />,
@@ -46,7 +42,7 @@ function DemoPageContent({ pathname }) {
       content = <AdminLoanPage />;
       break;
     default:
-      content = <div>Page Not Found</div>; // Fallback content
+      content = <div>Page Not Found</div>;
       break;
   }
 
@@ -75,11 +71,9 @@ function AdminLayout(props) {
 
   const router = useDemoRouter("/loans");
 
-  // Remove this const when copying and pasting into your project.
   const demoWindow = window !== undefined ? window() : undefined;
 
   return (
-    // preview-start
     <AppProvider
       navigation={NAVIGATION}
       branding={{
@@ -93,7 +87,6 @@ function AdminLayout(props) {
         <DemoPageContent pathname={router.pathname} />
       </DashboardLayout>
     </AppProvider>
-    // preview-end
   );
 }
 

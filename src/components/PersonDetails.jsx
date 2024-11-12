@@ -1,10 +1,11 @@
 import React from "react";
-import { Box, Card } from "@mui/material";
+import { Box, Card, Paper } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import selfiePlaceHolder from "../assets/man.svg";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid2";
-export default function PersonDetails({ personalDetails }) {
+
+export default function PersonDetails({ heading, personalDetails }) {
   const excludeKeys = ["selfie_url"];
   const formatKey = (key) => {
     return key
@@ -15,7 +16,7 @@ export default function PersonDetails({ personalDetails }) {
   };
 
   return (
-    <Box
+    <Paper
       sx={{
         width: "100%",
         height: "100%",
@@ -23,6 +24,21 @@ export default function PersonDetails({ personalDetails }) {
         py: 2,
       }}
     >
+      <Box sx={{ width: "50%" }}>
+        {" "}
+        <Typography
+          variant="h6"
+          sx={{
+            width: "100%",
+            textAlign: "left",
+            fontWeight: "bold",
+            color: "primary.main",
+            px: 2,
+          }}
+        >
+          {heading}
+        </Typography>
+      </Box>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
         <Box
           sx={{
@@ -93,6 +109,6 @@ export default function PersonDetails({ personalDetails }) {
           </Grid>
         </Box>
       </Card>{" "}
-    </Box>
+    </Paper>
   );
 }

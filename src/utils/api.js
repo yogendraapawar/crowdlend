@@ -4,7 +4,7 @@ const fetchData = async (endpoint, method = "GET", body = null) => {
   try {
     const headers = {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*", // This allows all origins
+      "Access-Control-Allow-Origin": "*",
     };
     const response = await fetch(`${API_URL}${endpoint}`, {
       method,

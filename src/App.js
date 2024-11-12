@@ -8,19 +8,16 @@ import {
 } from "react-router-dom";
 import SignIn from "./pages/login/Login";
 import AdminLayout from "./layout/AdminLayout";
-import { useEffect } from "react";
 
 function App() {
   const ProtectedRoute = ({ children, allowedRole }) => {
     const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
     const role = localStorage.getItem("role");
 
-    // If not authenticated, redirect to login
     if (!isAuthenticated) {
       return <Navigate to="/login" replace />;
     }
 
-    // Role-based routing logic
     if (allowedRole === "admin" && role !== "admin") {
       return <Navigate to="/login" replace />;
     }

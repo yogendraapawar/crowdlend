@@ -21,43 +21,9 @@ export default function AdminLoanDetailsDesktop({ loanDetails }) {
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        px: 1,
+        px: 2,
       }}
     >
-      <Box sx={{ display: "flex", width: "100%", pb: 1 }}>
-        <Box sx={{ width: "50%" }}>
-          {" "}
-          <Typography
-            variant="h6"
-            sx={{
-              width: "100%",
-              textAlign: "left",
-              fontWeight: "bold",
-              color: "primary.main",
-              px: 2,
-            }}
-          >
-            Borrower
-          </Typography>
-        </Box>
-        <Box sx={{ width: "50%" }}>
-          {" "}
-          <Typography
-            variant="h6"
-            sx={{
-              width: "100%",
-              textAlign: "left",
-              fontWeight: "bold",
-              color: "primary.main",
-              px: 2,
-            }}
-          >
-            Lender
-          </Typography>
-        </Box>
-      </Box>
-
-      <Divider />
       {/* Scrollable content area with side-by-side layout */}
       <Box
         sx={{
@@ -65,6 +31,9 @@ export default function AdminLoanDetailsDesktop({ loanDetails }) {
           width: "100%",
           height: "100%",
           overflow: "hidden",
+          border: "2px solid",
+          borderColor: "divider",
+          p: 2,
         }}
       >
         {/* Borrower Details */}
@@ -78,7 +47,10 @@ export default function AdminLoanDetailsDesktop({ loanDetails }) {
           }}
         >
           <div>
-            <PersonDetails personalDetails={loanDetails.borrower} />
+            <PersonDetails
+              heading={"Borrower"}
+              personalDetails={loanDetails.borrower}
+            />
           </div>
         </Box>
 
@@ -91,7 +63,10 @@ export default function AdminLoanDetailsDesktop({ loanDetails }) {
           }}
         >
           <div>
-            <PersonDetails personalDetails={loanDetails.lender} />
+            <PersonDetails
+              heading={"Lender"}
+              personalDetails={loanDetails.lender}
+            />
           </div>
         </Box>
       </Box>
