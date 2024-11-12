@@ -1,19 +1,9 @@
-import { Box, Tabs, Tab } from "@mui/material";
-import React, { useState } from "react";
-import CallMadeIcon from "@mui/icons-material/CallMade";
-import CallReceivedIcon from "@mui/icons-material/CallReceived";
-import PersonDetails from "../../components/PersonDetails";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
+import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
+import React from "react";
+import PersonDetails from "../../components/PersonDetails";
 
 export default function AdminLoanDetailsDesktop({ loanDetails }) {
-  const [value, setValue] = useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
   return (
     <Box
       sx={{

@@ -15,6 +15,9 @@ import AdminDashboard from "../pages/admin-dashboard/AdminDashboard";
 import MyBids from "../pages/my-bids/MyBids";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import GavelIcon from "@mui/icons-material/Gavel";
+import { useDispatch, useSelector } from "react-redux";
+import { setSession } from "../features/global/globalSlice";
+import { useNavigate } from "react-router-dom";
 
 const NAVIGATION = [
   {
@@ -72,7 +75,6 @@ function DemoPageContent({ pathname }) {
   return (
     <Box
       sx={{
-        py: 4,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -95,8 +97,40 @@ function HomeLayout(props) {
 
   const demoWindow = window !== undefined ? window() : undefined;
 
+  const session = useSelector((state) => state.global.session);
+
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const clearSession = () => {
+    localStorage.removeItem("role");
+    localStorage.removeItem("isAuthenticated");
+    dispatch(setSession(null));
+    navigate("/login");
+  };
+
+  const authentication = React.useMemo(() => {
+    return {
+      signIn: () => {
+        setSession({
+          user: {
+            name: "Bharat Kashyap",
+            email: "bharatkashyap@outlook.com",
+            image: "https://avatars.githubusercontent.com/u/19550456",
+          },
+        });
+      },
+      signOut: () => {
+        clearSession();
+      },
+    };
+  }, []);
+
   return (
     <AppProvider
+      session={session}
+      authentication={authentication}
       navigation={NAVIGATION}
       branding={{
         title: "CROWDLEND",

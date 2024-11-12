@@ -1,21 +1,27 @@
-import React from "react";
-import { Box, Paper, Typography, Button, IconButton } from "@mui/material";
-import Grid from "@mui/material/Grid2";
-import EnhancedTable from "./TableComponent";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { setIsBidFormOpened } from "../features/flags/flagsSlice";
-import { useDispatch } from "react-redux";
-import Divider from "@mui/material/Divider";
 import DownloadIcon from "@mui/icons-material/Download";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  IconButton,
+  Paper,
+  Typography,
+} from "@mui/material";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid2";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import manImage from "../assets/man.jpg";
-import { Card, CardHeader, CardContent } from "@mui/material";
+import { setIsBidFormOpened } from "../features/flags/flagsSlice";
+import EnhancedTable from "./TableComponent";
 
-export default function LoanRequestDetailsCard({
-  handleModalClose,
-  loanDetails,
-}) {
+export default function LoanRequestDetailsCard({ loanDetails }) {
   const dispatch = useDispatch();
+  const currentUserPath = useSelector((state) => state.global.currentUserPath);
   console.log("loanDetails keys", Object.keys(loanDetails));
+  console.log(currentUserPath);
   const isMyLoansPage = true;
   const offeredData = {
     "Loan Amount": "₹25,000",
@@ -81,6 +87,8 @@ export default function LoanRequestDetailsCard({
       .join(" ");
   };
 
+  useEffect(() => {});
+
   return (
     <Box
       sx={{
@@ -121,7 +129,7 @@ export default function LoanRequestDetailsCard({
             />
           </Box>
         </Box>
-        {true && (
+        {currentUserPath === "/my-bids" && (
           <Box
             sx={{
               flexGrow: 1,
@@ -319,23 +327,24 @@ export default function LoanRequestDetailsCard({
         </Box>
       </Paper>
       <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>
+        {currentUserPath === "/my-bids" && (
+          <Button
+            variant="contained"
+            onClick={() => {
+              dispatch(setIsBidFormOpened(true));
+            }}
+            color="error"
+          >
+            {"Delete"}
+          </Button>
+        )}
         <Button
           variant="contained"
           onClick={() => {
             dispatch(setIsBidFormOpened(true));
           }}
-          color="error"
-          hidden={false}
         >
-          {"Delete"}
-        </Button>
-        <Button
-          variant="contained"
-          onClick={() => {
-            dispatch(setIsBidFormOpened(true));
-          }}
-        >
-          {isMyLoansPage ? "Edit" : "Bid"}
+          {currentUserPath === "/my-bids" ? "Edit" : "Bid"}
         </Button>
       </Box>
     </Box>

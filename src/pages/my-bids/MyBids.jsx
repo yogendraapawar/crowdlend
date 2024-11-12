@@ -1,17 +1,15 @@
-import React from "react";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { Box, IconButton } from "@mui/material";
-import LoansList from "../../components/LoansList";
 import {
   PageContainer,
   PageContainerToolbar,
 } from "@toolpad/core/PageContainer";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import React from "react";
+import LoansList from "../../components/LoansList";
 
-import FilterTab from "../../components/FilterTab";
-import LoansFilter from "../admin-loan-page/LoansFilter";
-import MyBidsFilter from "../admin-loan-page/MyLoansFilter";
-import { setIsMyBidsFilterOpen } from "../../features/flags/flagsSlice";
 import { useDispatch } from "react-redux";
+import { setIsMyBidsFilterOpen } from "../../features/flags/flagsSlice";
+import MyBidsFilter from "../admin-loan-page/MyLoansFilter";
 
 export default function MyBids() {
   const loanData = [

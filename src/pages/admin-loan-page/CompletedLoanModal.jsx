@@ -1,13 +1,10 @@
-import React from "react";
-import Modal from "@mui/material/Modal";
-import { Box } from "@mui/material";
-import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
-import { IconButton } from "@mui/material";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { Box, IconButton } from "@mui/material";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import LoanAgreementDetails from "../../components/LoanAgreement";
-import { useSelector } from "react-redux";
 import { setIsAdminLoanDetailsModalOpen } from "../../features/flags/flagsSlice";
 export default function AdminLoanModal() {
   const [isLoading, setIsLoading] = useState(false);

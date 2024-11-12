@@ -1,23 +1,22 @@
-import * as React from "react";
-import {
-  Button,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-  TextField,
-  InputAdornment,
-  IconButton,
-  Box,
-  Container,
-  Paper,
-} from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { useTheme } from "@mui/material/styles";
+import {
+  Box,
+  Button,
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Paper,
+  TextField,
+} from "@mui/material";
+import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import { post } from "../../utils/api";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { setSession } from "../../features/global/globalSlice";
 
 function CustomMobileNumberField({ value, onChange }) {
   const handleInputChange = (event) => {
@@ -95,7 +94,7 @@ function CustomPasswordField({ value, onChange }) {
 }
 
 export default function SignIn() {
-  const theme = useTheme();
+  // const theme = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = React.useState({
@@ -112,16 +111,20 @@ export default function SignIn() {
         password: formData.password,
       };
 
-      const response = await post("/users/login/user-login", body);
+      const response = await post("/users/login", body);
 
-      if (response.success) {
-        localStorage.setItem("isAuthenticated", "true");
-        localStorage.setItem("role", response.role || "");
-
-        navigate("/home", { replace: true });
-      } else {
-        alert("Login failed: " + response.message);
-      }
+      localStorage.setItem("isAuthenticated", "true");
+      localStorage.setItem("role", response.user.role || "");
+      dispatch(
+        setSession({
+          user: {
+            name: response.user.name,
+            email: response.user.phone,
+            image: response.user.photo,
+          },
+        })
+      );
+      navigate("/dashboard");
     } catch (error) {
       console.error("Login Error:", error);
       alert("Login failed: " + error.message);

@@ -1,17 +1,14 @@
-import React, { useState } from "react";
 import {
   Box,
-  Typography,
   Button,
-  TextField,
-  IconButton,
+  Collapse,
   MenuItem,
+  TextField,
+  Typography,
 } from "@mui/material";
-import Grid from "@mui/material/Grid2";
-import { Collapse } from "@mui/material";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import FilterAltOffIcon from "@mui/icons-material/FilterAltOff";
 import Card from "@mui/material/Card";
+import Grid from "@mui/material/Grid2";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 const FilterTab = () => {
   const [interestRateInputs, setInterestRateInputs] = useState(["0", "10"]);

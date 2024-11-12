@@ -46,7 +46,7 @@ function App() {
           <Route
             path="/home"
             element={
-              // <ProtectedRoute allowedRole="lender">
+              // <ProtectedRoute allowedRole="Lender">
               <HomeLayout />
               // </ProtectedRoute>
             }
@@ -59,7 +59,7 @@ function App() {
           <Route
             path="/admin"
             element={
-              // <ProtectedRoute allowedRole="admin">
+              // <ProtectedRoute allowedRole="Admin">
               <AdminLayout />
               // </ProtectedRoute>
             }
