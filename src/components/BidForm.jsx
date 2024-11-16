@@ -9,7 +9,13 @@ import {
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useDispatch } from "react-redux";
-import { setIsBidFormOpened } from "../features/flags/flagsSlice";
+import {
+  setIsBidFormOpened,
+  setIsLoanDetailsModalOpen,
+} from "../features/flags/flagsSlice";
+import { ConfirmDialog } from "@toolpad/core";
+import ConfirmationDialog from "./ConfirmationDialog";
+import { DisabledByDefault } from "@mui/icons-material";
 
 export default function BidForm({ loanDetails }) {
   const [months, setMonths] = useState(loanDetails.loan_tenure || "");
@@ -23,7 +29,17 @@ export default function BidForm({ loanDetails }) {
   const [loanTotalPayment, setLoanTotalPayment] = useState(0);
   const [loanInterestAmount, setLoanInterestAmount] = useState(0);
   const [userInterestAmount, setUserInterestAmount] = useState(0);
+  const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] =
+    useState(false);
+  // Function to open the confirmation dialog
+  const openConfirmationDialog = () => {
+    setIsConfirmationDialogOpen(true);
+  };
 
+  // Function to close the confirmation dialog
+  const closeConfirmationDialog = () => {
+    setIsConfirmationDialogOpen(false);
+  };
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -85,7 +101,7 @@ export default function BidForm({ loanDetails }) {
         gap: 1,
       }}
     >
-      <Grid container spacing={2}>
+      <Grid container spacing={2} mt={2}>
         <Grid
           sx={{ width: "100%", px: "1rem" }}
           size={{ sm: 12, md: 6, lg: 6 }}
@@ -339,7 +355,13 @@ export default function BidForm({ loanDetails }) {
                 >
                   Cancel
                 </Button>
-                <Button variant="contained" type="submit">
+                <Button
+                  variant="contained"
+                  type="submit"
+                  onClick={() => {
+                    openConfirmationDialog();
+                  }}
+                >
                   Submit
                 </Button>
               </ButtonGroup>
@@ -347,6 +369,10 @@ export default function BidForm({ loanDetails }) {
           </Box>
         </Grid>
       </Grid>
+      <ConfirmationDialog
+        open={isConfirmationDialogOpen}
+        onClose={closeConfirmationDialog}
+      />
     </Box>
   );
 }

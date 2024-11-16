@@ -1,48 +1,52 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  showLoanDetailsModal: false,
+  isLoanDetailsModalOpen: false,
   isBidFormOpened: false,
   isAdminLoansFilterOpen: false,
   isHomeFilterTabOpen: false,
   isAdminLoanDetailsModalOpen: false,
   isMyBidsFilterOpen: false,
+  isConfirmationDialogOpen: false,
 };
 
 export const flagSlice = createSlice({
   name: "flagSlice",
   initialState,
   reducers: {
-    setShowLoanDetailsModal: (state, action) => {
-      state.showLoanDetailsModal = action.payload;
+    setIsLoanDetailsModalOpen: (state, action) => {
+      state.isLoanDetailsModalOpen = action.payload;
     },
     setIsBidFormOpened: (state, action) => {
       state.isBidFormOpened = action.payload;
     },
     setisAdminLoansFilterOpen: (state) => {
-      console.log("setting loan", state.isAdminLoansFilterOpen);
       state.isAdminLoansFilterOpen = !state.isAdminLoansFilterOpen;
     },
     setisHomeFilterTabOpen: (state) => {
-      console.log("setting loan", state.isHomeFilterTabOpen);
       state.isHomeFilterTabOpen = !state.isHomeFilterTabOpen;
     },
     setIsAdminLoanDetailsModalOpen: (state, action) => {
       state.isAdminLoanDetailsModalOpen = action.payload;
     },
-    setIsMyBidsFilterOpen: (state, action) => {
+    setIsMyBidsFilterOpen: (state) => {
       state.isMyBidsFilterOpen = !state.isMyBidsFilterOpen;
+    },
+    // New action to set confirmation dialog open/close state
+    setIsConfirmationDialogOpen: (state, action) => {
+      state.isConfirmationDialogOpen = action.payload;
     },
   },
 });
 
 export const {
-  setShowLoanDetailsModal,
+  setIsLoanDetailsModalOpen,
   setIsBidFormOpened,
   setisAdminLoansFilterOpen,
   setisHomeFilterTabOpen,
   setIsAdminLoanDetailsModalOpen,
   setIsMyBidsFilterOpen,
+  setIsConfirmationDialogOpen, // Export new action
 } = flagSlice.actions;
 
 export default flagSlice.reducer;

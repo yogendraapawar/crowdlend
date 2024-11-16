@@ -6,7 +6,7 @@ import PercentIcon from "@mui/icons-material/Percent";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import { CardActionArea } from "@mui/material";
 import LoanDetailsModal from "../components/LoanDetailsModal";
@@ -16,6 +16,9 @@ import Grid from "@mui/material/Grid2";
 import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";
 import GavelIcon from "@mui/icons-material/Gavel";
+import { post } from "../utils/api";
+import { useDispatch } from "react-redux";
+import { setIsLoanDetailsModalOpen } from "../features/flags/flagsSlice";
 
 export default function LoansList() {
   const loanData = [
@@ -109,24 +112,18 @@ export default function LoansList() {
       bids_count: Math.floor(Math.random() * 151) + 50,
     },
   ];
+  // const loanData=useState()
 
-  const [modalOpen, setModalOpen] = useState(false);
   const [selectedLoanId, setSelectedLoanId] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [itemsPerPage, setItemPerPage] = useState(50);
-
+  const dispatch = useDispatch();
   const handleClick = (loanId) => {
     setSelectedLoanId(loanId);
-    handleModalOpen();
-  };
-
-  const handleModalOpen = () => {
-    setModalOpen(true);
+    dispatch(setIsLoanDetailsModalOpen(true));
   };
 
   console.log("RERENDERED LOANLIST");
-
-  const handleModalClose = () => setModalOpen(false);
 
   const startIndex = currentPage * itemsPerPage;
   const currentLoans = loanData.slice(startIndex, startIndex + itemsPerPage);
@@ -134,6 +131,26 @@ export default function LoansList() {
   const handleChangePage = (event, newPage) => {
     setCurrentPage(newPage);
   };
+
+  const fetchLoans = async (page, limit) => {
+    const offset = page * limit;
+
+    try {
+      const response = await post("/loans/filtered", {
+        limit: limit,
+        offset: offset,
+      });
+
+      // setLoanData(response.data);
+      // setTotalCount(response.totalCount);
+    } catch (error) {
+      console.error("Error fetching loans:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchLoans(currentPage, itemsPerPage);
+  });
 
   return (
     <>
@@ -158,13 +175,10 @@ export default function LoansList() {
         rowsPerPage={itemsPerPage}
         onRowsPerPageChange={(event) => {
           setItemPerPage(parseInt(event.target.value, 10));
+          setCurrentPage(0);
         }}
       />
-      <LoanDetailsModal
-        modalOpen={modalOpen}
-        selectedLoanId={selectedLoanId}
-        handleModalClose={handleModalClose}
-      />
+      <LoanDetailsModal selectedLoanId={selectedLoanId} />
     </>
   );
 }

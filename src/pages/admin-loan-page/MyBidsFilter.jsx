@@ -83,7 +83,7 @@ const MyBidsFilter = () => {
             {/* Date Range Filter */}
             <Grid item xs={12}>
               <Typography fontSize={14} textAlign={"left"} gutterBottom>
-                Loan Date Range
+                Bid Date Range
               </Typography>
               <Box
                 sx={{
@@ -146,9 +146,23 @@ const MyBidsFilter = () => {
                     height: "30px",
                   },
                 }}
+                slotProps={{
+                  select: {
+                    native: true,
+                  },
+                }}
               >
-                <MenuItem value="completed">Completed</MenuItem>
-                <MenuItem value="closed">Closed</MenuItem>
+                <option value="" disabled>
+                  Select Loan Status
+                </option>
+                <option key={"completed"} value={"completed"}>
+                  {"Completed"}
+                </option>
+                <option key={"Closed"} value={"Closed"}>
+                  {"Closed"}
+                </option>
+                {/* <MenuItem value="completed">Completed</MenuItem>
+                <MenuItem value="closed">Closed</MenuItem> */}
               </TextField>
             </Grid>
 
@@ -169,9 +183,17 @@ const MyBidsFilter = () => {
                     height: "30px",
                   },
                 }}
+                slotProps={{
+                  select: {
+                    native: true,
+                  },
+                }}
               >
-                <MenuItem value="open">Open</MenuItem>
-                <MenuItem value="closed">Closed</MenuItem>
+                <option value="" disabled>
+                  Select Bid Status
+                </option>
+                <option value="open">Open</option>
+                <option value="closed">Closed</option>
               </TextField>
             </Grid>
           </Grid>

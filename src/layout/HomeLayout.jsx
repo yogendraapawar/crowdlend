@@ -16,7 +16,7 @@ import MyBids from "../pages/my-bids/MyBids";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import GavelIcon from "@mui/icons-material/Gavel";
 import { useDispatch, useSelector } from "react-redux";
-import { setSession } from "../features/global/globalSlice";
+import { setCurrentUserPath, setSession } from "../features/global/globalSlice";
 import { useNavigate } from "react-router-dom";
 
 const NAVIGATION = [
@@ -55,6 +55,8 @@ const demoTheme = createTheme({
 
 function DemoPageContent({ pathname }) {
   let content;
+  const dispatch = useDispatch();
+  dispatch(setCurrentUserPath(pathname));
 
   switch (pathname) {
     case "/dashboard":

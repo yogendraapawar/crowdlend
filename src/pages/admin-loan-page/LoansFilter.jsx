@@ -131,13 +131,22 @@ const LoansFilter = () => {
                 onChange={handleStatusChange}
                 variant="outlined"
                 sx={{
+                  width: "100%",
                   "& .MuiInputBase-root": {
                     height: "30px",
                   },
                 }}
+                slotProps={{
+                  select: {
+                    native: true,
+                  },
+                }}
               >
-                <MenuItem value="completed">Completed</MenuItem>
-                <MenuItem value="closed">Closed</MenuItem>
+                <option value="" disabled>
+                  Select Loan Status
+                </option>
+                <option value="completed">Completed</option>
+                <option value="closed">Closed</option>
               </TextField>
             </Grid>
           </Grid>

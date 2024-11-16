@@ -22,7 +22,6 @@ export default function LoanRequestDetailsCard({ loanDetails }) {
   const currentUserPath = useSelector((state) => state.global.currentUserPath);
   console.log("loanDetails keys", Object.keys(loanDetails));
   console.log(currentUserPath);
-  const isMyLoansPage = true;
   const offeredData = {
     "Loan Amount": "₹25,000",
     "Interest Rate": "7.4%",

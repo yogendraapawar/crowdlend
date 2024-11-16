@@ -217,21 +217,28 @@ const FilterTab = () => {
 
                 <TextField
                   select
+                  fullWidth
                   size="small"
                   value={loanStatus}
                   onChange={(e) => setLoanStatus(e.target.value)}
+                  variant="outlined"
                   sx={{
                     width: "100%",
                     "& .MuiInputBase-root": {
                       height: "30px",
                     },
                   }}
+                  slotProps={{
+                    select: {
+                      native: true,
+                    },
+                  }}
                 >
-                  {["a", "b", "c"].map((name) => (
-                    <MenuItem key={name} value={name}>
-                      {name}
-                    </MenuItem>
-                  ))}
+                  <option value="" disabled>
+                    Select Loan Status
+                  </option>
+                  <option value="completed">Completed</option>
+                  <option value="closed">Closed</option>
                 </TextField>
               </Box>
             </Grid>

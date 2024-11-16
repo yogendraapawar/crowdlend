@@ -1,11 +1,14 @@
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { CircularProgress, Alert, Slide } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
 import {
   Box,
   Button,
   FormControl,
   IconButton,
+  Collapse,
   InputAdornment,
   InputLabel,
   OutlinedInput,
@@ -94,16 +97,21 @@ function CustomPasswordField({ value, onChange }) {
 }
 
 export default function SignIn() {
-  // const theme = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [formData, setFormData] = React.useState({
     mobileNumber: "",
     password: "",
   });
 
+  const [loading, setLoading] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
+  const [open, setOpen] = React.useState(false);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     try {
       const body = {
@@ -115,6 +123,7 @@ export default function SignIn() {
 
       localStorage.setItem("isAuthenticated", "true");
       localStorage.setItem("role", response.user.role || "");
+
       dispatch(
         setSession({
           user: {
@@ -127,7 +136,10 @@ export default function SignIn() {
       navigate("/dashboard");
     } catch (error) {
       console.error("Login Error:", error);
-      alert("Login failed: " + error.message);
+      setErrorMessage(error?.message || "An error occurred. Please try again.");
+      setOpen(true);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -140,10 +152,19 @@ export default function SignIn() {
         justifyContent: "center",
         height: "100vh",
         width: "100vw",
-        px: 4,
+        overflow: "hidden", // Prevent scrolling
       }}
     >
-      <Paper sx={{ p: 4 }}>
+      <Paper
+        sx={{
+          p: 4,
+          width: "100%",
+          maxWidth: "400px", // Ensure the form fits smaller screens
+          boxSizing: "border-box",
+          backgroundColor: "rgba(255, 255, 255, 0.9)", // Subtle overlay for contrast
+          borderRadius: "8px",
+        }}
+      >
         <form onSubmit={handleSubmit}>
           <CustomMobileNumberField
             value={formData.mobileNumber}
@@ -157,6 +178,13 @@ export default function SignIn() {
               setFormData((prev) => ({ ...prev, password: value }))
             }
           />
+
+          <Collapse in={open}>
+            <Alert icon={<CheckIcon fontSize="inherit" />} severity="error">
+              {errorMessage}
+            </Alert>
+          </Collapse>
+
           <Button
             type="submit"
             variant="outlined"
@@ -165,8 +193,13 @@ export default function SignIn() {
             disableElevation
             fullWidth
             sx={{ my: 2 }}
+            disabled={loading}
           >
-            Sign In
+            {loading ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : (
+              "Sign In"
+            )}
           </Button>
         </form>
       </Paper>

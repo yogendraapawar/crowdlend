@@ -1,39 +1,54 @@
-import React, { useEffect } from "react";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import { useState } from "react";
-import LoanRequestDetailsCard from "./LoanRequestDetailsCard";
-import { useSelector } from "react-redux";
-import BidForm from "./BidForm";
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Typography,
+  Dialog,
+  IconButton,
+  CircularProgress,
+  Slide,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { IconButton } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { setIsBidFormOpened } from "../features/flags/flagsSlice";
-import { Height } from "@mui/icons-material";
-
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "90%",
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  height: "90%",
+import LoanRequestDetailsCard from "./LoanRequestDetailsCard";
+import BidForm from "./BidForm";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setIsBidFormOpened,
+  setIsLoanDetailsModalOpen,
+} from "../features/flags/flagsSlice";
+const dialogStyle = {
+  width: "100%",
+  height: "100%",
   display: "flex",
   flexDirection: "column",
   padding: 0,
 };
 
-export default function LoanDetailsModal({
-  modalOpen,
-  selectedLoanId,
-  handleModalClose,
-}) {
-  const [isLoading, setIsLoading] = useState(true);
-  const dispatch = useDispatch();
+const headerStyle = {
+  position: "sticky",
+  top: 0,
+  bgcolor: "background.paper",
+  borderBottom: "1px solid",
+  borderColor: "divider",
+  p: 2,
+  zIndex: 1,
+};
 
+const contentStyle = {
+  overflowY: "auto",
+  flex: 1,
+  px: 2,
+  py: 3,
+};
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+export default function LoanDetailsModal({ selectedLoanId }) {
+  const [isLoading, setIsLoading] = useState(true);
+  const isModalOpen = useSelector(
+    (state) => state.flags.isLoanDetailsModalOpen
+  );
   const [loanDetails, setLoanDetails] = useState({
     expected_interest_rate: 7.4,
     borrower_name: "Yogendra Pawar",
@@ -93,57 +108,41 @@ export default function LoanDetailsModal({
     ],
   });
   const isBidFormOpened = useSelector((state) => state.flags.isBidFormOpened);
+  const dispatch = useDispatch();
 
-  const handleClose = (event, reason) => {
-    if (reason && reason === "backdropClick") return;
-    handleModalClose();
+  const handleClose = () => {
+    dispatch(setIsLoanDetailsModalOpen(false));
+    dispatch(setIsBidFormOpened(false));
   };
 
   const fetchData = async () => {
     try {
+      // Simulate fetching data
     } catch (error) {
-      console.error("Error fetching loan modal details:", error);
+      console.error("Error fetching loan dialog details:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    console.log("useeffect", selectedLoanId);
     if (selectedLoanId) {
       fetchData();
     }
   }, [selectedLoanId]);
 
-  const headerStyle = {
-    position: "sticky",
-    top: 0,
-    bgcolor: "background.paper",
-    borderBottom: "1px solid",
-    borderColor: "divider",
-    p: 2,
-    zIndex: 1,
-  };
-
-  const contentStyle = {
-    overflowY: "auto",
-    flex: 1,
-    px: 2,
-    py: 3,
-  };
   return (
-    <Modal
-      open={modalOpen}
+    <Dialog
+      fullScreen
+      open={isModalOpen}
       onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-      slotProps={{
-        backdrop: {
-          timeout: 500,
-        },
+      TransitionComponent={Transition}
+      BackdropProps={{
+        timeout: 500, // Sync the backdrop transition with the dialog
       }}
+      disableRestoreFocus
     >
-      <Box sx={modalStyle}>
+      <Box sx={dialogStyle}>
         {/* Sticky Header */}
         <Box sx={headerStyle}>
           <Box
@@ -154,23 +153,16 @@ export default function LoanDetailsModal({
               paddingX: 2,
             }}
           >
-            <Box
-              sx={{
-                textAlign: "left",
-                width: "100%",
-                fontSize: "1.5rem",
-                fontWeight: "bold",
-                color: "text.secondary",
-              }}
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ fontWeight: "bold", color: "text.secondary" }}
             >
               {isBidFormOpened ? "Bid Form" : "Loan Details"}
-            </Box>
+            </Typography>
             <IconButton
               sx={{ display: isBidFormOpened ? "none" : "block" }}
-              onClick={() => {
-                handleModalClose();
-                dispatch(setIsBidFormOpened(false));
-              }}
+              onClick={handleClose}
             >
               <CloseIcon />
             </IconButton>
@@ -180,21 +172,18 @@ export default function LoanDetailsModal({
         {/* Scrollable Content */}
         <Box sx={contentStyle}>
           {isLoading ? (
-            <Typography>Loading content...</Typography>
+            <CircularProgress />
           ) : (
             <>
               {isBidFormOpened ? (
                 <BidForm loanDetails={loanDetails} />
               ) : (
-                <LoanRequestDetailsCard
-                  handleModalClose={handleModalClose}
-                  loanDetails={loanDetails}
-                />
+                <LoanRequestDetailsCard loanDetails={loanDetails} />
               )}
             </>
           )}
         </Box>
       </Box>
-    </Modal>
+    </Dialog>
   );
 }

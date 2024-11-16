@@ -9,7 +9,7 @@ import LoansList from "../../components/LoansList";
 
 import { useDispatch } from "react-redux";
 import { setIsMyBidsFilterOpen } from "../../features/flags/flagsSlice";
-import MyBidsFilter from "../admin-loan-page/MyLoansFilter";
+import MyBidsFilter from "../admin-loan-page/MyBidsFilter";
 
 export default function MyBids() {
   const loanData = [
